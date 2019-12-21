@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.scaler7</groupId>
+    <artifactId>7blog-parent</artifactId>
+    <version>1.0</version>
+  </parent>
+  <artifactId>7blog-service</artifactId>
+  <name>7blog-service</name>
+  <description>接口实现</description>
+  
+  <dependencies>
+  	<dependency>
+  		<groupId>com.scaler7</groupId>
+  		<artifactId>7blog-api</artifactId>
+  		<version>1.0</version>
+  	</dependency>
+  	
+  	<dependency>
+  		<groupId>com.scaler7</groupId>
+  		<artifactId>7blog-mapper</artifactId>
+  		<version>1.0</version>
+  	</dependency>
+  </dependencies>
+</project>
