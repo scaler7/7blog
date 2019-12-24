@@ -5,7 +5,7 @@ layui.define(["layer"], function (exprots) {
         /**
          * 是否前后端分离
          */
-        isFrontendBackendSeparate: true,
+        isFrontendBackendSeparate: false,
         /**
          * 服务器地址
          */
@@ -52,7 +52,7 @@ layui.define(["layer"], function (exprots) {
                     }
                 },
                 success: function (data) {
-                    if (data.code == 0) {
+                    if (data.code == 200) {
                         // 业务正常
                         deferred.resolve(data)
                     } else {
