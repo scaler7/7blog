@@ -8,4 +8,11 @@
   <artifactId>7blog-domain</artifactId>
   <name>7blog-domain</name>
   <description>数据库表实体</description>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.scaler7</groupId>
+  		<artifactId>7blog-common</artifactId>
+  		<version>1.0</version>
+  	</dependency>
+  </dependencies>
 </project>

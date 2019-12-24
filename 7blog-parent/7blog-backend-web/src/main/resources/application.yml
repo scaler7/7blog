@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog2?serverTimezone=GMT%2B8
+    username: root
+    password: root
+    
+#mybatis-plus的配置
+mybatis-plus:
+  mapper-locations:
+  - classpath:/mapping/*.xml
+  type-aliases-package: com.scaler7.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#shiro
+shiro:
+  login-url: /login.html
+  unauthorized-url: /unauthorized
+  hash-algorithm-name: md5
+  hash-iterations: 2
+  anon-urls:
+  - /login
+  - /unauthorized
+  - /css/**
+  - /data/**
+  - /images/**
+  - /js/**
+  - /lib/**
+  authc-urls:
+  - /**
+#swagger2
+swagger2:
+  base-package: com.scaler7.controller
+  email: scaler7@163.com
+  name: 黄家琪
+  url: https://github.com/scaler7
+  title: 后台管理接口
+  description: 提供后台管理系统的所有CRUD操作接口
+  terms-of-service-url: scaler7
+  license: GPL3.0

@@ -1,0 +1,97 @@
+{
+  "groups": [
+    {
+      "name": "shiro",
+      "type": "com.scaler7.config.ShiroConfig",
+      "sourceType": "com.scaler7.config.ShiroConfig"
+    },
+    {
+      "name": "swagger2",
+      "type": "com.scaler7.config.SwaggerProperty",
+      "sourceType": "com.scaler7.config.SwaggerProperty"
+    }
+  ],
+  "properties": [
+    {
+      "name": "shiro.anon-urls",
+      "type": "java.lang.String[]",
+      "sourceType": "com.scaler7.config.ShiroConfig"
+    },
+    {
+      "name": "shiro.authc-urls",
+      "type": "java.lang.String[]",
+      "sourceType": "com.scaler7.config.ShiroConfig"
+    },
+    {
+      "name": "shiro.hash-algorithm-name",
+      "type": "java.lang.String",
+      "sourceType": "com.scaler7.config.ShiroConfig"
+    },
+    {
+      "name": "shiro.hash-iterations",
+      "type": "java.lang.Integer",
+      "sourceType": "com.scaler7.config.ShiroConfig"
+    },
+    {
+      "name": "shiro.login-url",
+      "type": "java.lang.String",
+      "sourceType": "com.scaler7.config.ShiroConfig"
+    },
+    {
+      "name": "shiro.target-bean-name",
+      "type": "java.lang.String",
+      "sourceType": "com.scaler7.config.ShiroConfig"
+    },
+    {
+      "name": "shiro.target-filter-lifecycle",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.scaler7.config.ShiroConfig"
+    },
+    {
+      "name": "shiro.unauthorized-url",
+      "type": "java.lang.String",
+      "sourceType": "com.scaler7.config.ShiroConfig"
+    },
+    {
+      "name": "swagger2.base-package",
+      "type": "java.lang.String",
+      "sourceType": "com.scaler7.config.SwaggerProperty"
+    },
+    {
+      "name": "swagger2.description",
+      "type": "java.lang.String",
+      "sourceType": "com.scaler7.config.SwaggerProperty"
+    },
+    {
+      "name": "swagger2.email",
+      "type": "java.lang.String",
+      "sourceType": "com.scaler7.config.SwaggerProperty"
+    },
+    {
+      "name": "swagger2.license",
+      "type": "java.lang.String",
+      "sourceType": "com.scaler7.config.SwaggerProperty"
+    },
+    {
+      "name": "swagger2.name",
+      "type": "java.lang.String",
+      "sourceType": "com.scaler7.config.SwaggerProperty"
+    },
+    {
+      "name": "swagger2.terms-of-service-url",
+      "type": "java.lang.String",
+      "sourceType": "com.scaler7.config.SwaggerProperty"
+    },
+    {
+      "name": "swagger2.title",
+      "type": "java.lang.String",
+      "sourceType": "com.scaler7.config.SwaggerProperty"
+    },
+    {
+      "name": "swagger2.url",
+      "type": "java.lang.String",
+      "sourceType": "com.scaler7.config.SwaggerProperty"
+    }
+  ],
+  "hints": []
+}
