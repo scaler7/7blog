@@ -1,8 +1,13 @@
 package com.scaler7.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -39,8 +44,11 @@ public class BlogArticle implements Serializable {
     @ApiModelProperty(value = "标题")
     private String title;
 
-    @ApiModelProperty(value = "内容")
-    private String content;
+    @ApiModelProperty(value = "markdown内容")
+    private String contentMd;
+    
+    @ApiModelProperty(value = "html内容")
+    private String contentHtml;
 
     @ApiModelProperty(value = "浏览量")
     private Integer pageView;
@@ -49,22 +57,29 @@ public class BlogArticle implements Serializable {
     private Integer commentCount;
 
     @ApiModelProperty(value = "发表时间")
-    private LocalDate createTime;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:SS",timezone = "GMT+8")
+    private LocalDateTime createTime;
 
     @ApiModelProperty(value = "修改时间")
-    private LocalDate modifyTime;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:SS",timezone = "GMT+8")
+    private LocalDateTime modifyTime;
 
     @ApiModelProperty(value = "点赞数")
     private Integer likeCount;
 
     @ApiModelProperty(value = "排序码")
     private Integer sort;
+    
+    @ApiModelProperty(value = "是否允许评论")
+    private Integer allowComment = 0;
 
     @ApiModelProperty(value = "是否置顶 1置顶0不置顶")
-    private Integer isTop;
+    private Integer isTop = 0;
 
     @ApiModelProperty(value = "是否有效 1有效0无效")
-    private Integer isValid;
+    private Integer isValid = 0;
 
 
 }

@@ -68,7 +68,7 @@
             form.on("submit(login)", function (data) {
             	var username = $("#username").val();
             	var password = $("#password").val();
-                okUtils.ajax("/login", "post", {username:username,password:password}, true).done(function (response) {
+                okUtils.ajax("/login", "get", {username:username,password:password}, true).done(function (response) {
                     okLayer.greenTickMsg(response.msg, function () {
                         window.location = "../index.html";
                     })

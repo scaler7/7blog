@@ -3,7 +3,12 @@ package com.scaler7.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -53,9 +58,13 @@ public class BlogVisitor implements Serializable {
     private String profilePhoto;
 
     @ApiModelProperty(value = "注册时间")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private LocalDateTime registTime;
 
     @ApiModelProperty(value = "访客上次登录时间")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private LocalDateTime lastLoginTime;
 
     @ApiModelProperty(value = "访客生日")
@@ -71,10 +80,10 @@ public class BlogVisitor implements Serializable {
     private Integer identity;
 
     @ApiModelProperty(value = "是否允许发送通知")
-    private Integer allowInform;
+    private Integer allowInform = 0;
 
     @ApiModelProperty(value = "是否有效")
-    private Integer isValid;
+    private Integer isValid = 0;
 
 
 }

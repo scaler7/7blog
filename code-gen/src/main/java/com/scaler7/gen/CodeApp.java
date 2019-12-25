@@ -32,10 +32,10 @@ public class CodeApp {
 
 		// 数据源配置
 		DataSourceConfig dsc = new DataSourceConfig();
-		dsc.setUrl("jdbc:mysql://scaler7.online:3306/blog2?useUnicode=true&useSSL=false&characterEncoding=utf8");
-		dsc.setDriverName("com.mysql.jdbc.Driver");
+		dsc.setUrl("jdbc:mysql://127.0.0.1:3306/blog2?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2B8");
+		dsc.setDriverName("com.mysql.cj.jdbc.Driver");
 		dsc.setUsername("root");
-		dsc.setPassword("123456");
+		dsc.setPassword("root");
 		mpg.setDataSource(dsc);
 
 		// 包配置

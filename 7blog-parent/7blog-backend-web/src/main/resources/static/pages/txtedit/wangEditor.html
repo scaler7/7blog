@@ -8,21 +8,27 @@
 </head>
 <body>
     <div class="ok-body">
-        <div id="editor">
+        <div id="editor" class="layui-col-xs6 layui-col-sm6 layui-col-md6">
+            <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+        </div>
+        <div id="preview" class="layui-col-xs6 layui-col-sm6 layui-col-md6">
             <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
         </div>
         <br/>
-        <button type="button" class="layui-btn" onclick="setContent()">设置内容</button>
+    </div>
+    <button type="button" class="layui-btn" onclick="setContent()">设置内容</button>
         <button type="button" class="layui-btn" onclick="appendContent()">追加内容</button>
         <button type="button" class="layui-btn" onclick="clearContent()">清空内容</button>
         <button type="button" class="layui-btn" onclick="getHtmlContent()">获取HTML内容</button>
         <button type="button" class="layui-btn" onclick="getTextContent()">获取TEXT内容</button>
-    </div>
     <!--js逻辑-->
     <script src="https://cdn.bootcss.com/wangEditor/10.0.13/wangEditor.min.js"></script>
     <script type="text/javascript">
         let E = window.wangEditor;
         let editor = new E("#editor");
+        editor.customConfig.onchange = function (html) {
+            console.log(html)
+        }
         editor.create();
 
         function setContent() {

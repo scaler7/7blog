@@ -12,11 +12,9 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.scaler7.common.CodeMsg;
 import com.scaler7.common.Constant;
 import com.scaler7.common.Result;
@@ -33,7 +31,7 @@ public class LoginController {
 	@Autowired
 	SysMenuService sysMenuService;
 	
-	@PostMapping("login")
+	@GetMapping("login")
 	@ApiOperation("用户登录")
 	public Object login(
 			@RequestParam(value = "username") String usernmae,
