@@ -1,0 +1,20 @@
+server:
+  port: 80
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog2?serverTimezone=GMT%2B8
+    username: root
+    password: root
+  thymeleaf:
+    cache: false
+    enabled: true
+    
+#mybatis-plus的配置
+mybatis-plus:
+  mapper-locations:
+  - classpath:/mapping/*.xml
+  type-aliases-package: com.scaler7.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

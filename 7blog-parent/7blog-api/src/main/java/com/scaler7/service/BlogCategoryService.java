@@ -1,6 +1,9 @@
 package com.scaler7.service;
 
 import com.scaler7.entity.BlogCategory;
+
+import java.util.List;
+
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -12,5 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2019-12-24
  */
 public interface BlogCategoryService extends IService<BlogCategory> {
+
+	List<BlogCategory> findCategoryList();
 
 }

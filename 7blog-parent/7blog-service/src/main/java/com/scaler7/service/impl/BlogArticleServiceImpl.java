@@ -1,9 +1,11 @@
 package com.scaler7.service.impl;
 
+import com.scaler7.common.Constant;
 import com.scaler7.entity.BlogArticle;
 import com.scaler7.entity.SysUser;
 import com.scaler7.mapper.BlogArticleMapper;
 import com.scaler7.service.BlogArticleService;
+import com.scaler7.utils.WebUtil;
 import com.scaler7.vo.BlogArticleVO;
 import cn.hutool.core.lang.Assert;
 import lombok.extern.slf4j.Slf4j;
@@ -11,10 +13,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import org.apache.shiro.SecurityUtils;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -35,13 +36,23 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleMapper, BlogA
 	BlogArticleMapper blogArticleMapper;
 
 	@Override
-	public IPage<BlogArticle> findByPage(Page<BlogArticle> page, BlogArticleVO blogArticleVO) {
-		log.info("分页查询文章{},{}", page.getCurrent(), page.getSize());
+	public IPage<BlogArticle> findByPageBackend(Page<BlogArticle> page, BlogArticleVO blogArticleVO) {
+		log.info("后端管理分页查询文章{},{}", page.getCurrent(), page.getSize());
 		IPage<BlogArticle> pageData = blogArticleMapper.selectPage(page, new LambdaQueryWrapper<BlogArticle>()
 				.like(StringUtils.hasText(blogArticleVO.getTitle()), BlogArticle::getTitle, blogArticleVO.getTitle())
 				.le(blogArticleVO.getEndTime() != null, BlogArticle::getCreateTime, blogArticleVO.getEndTime())
 				.ge(blogArticleVO.getStartTime() != null, BlogArticle::getCreateTime, blogArticleVO.getStartTime()));
 		return pageData;
+	}
+
+	public List<BlogArticle> findArticleList(Integer limit) {
+		Assert.notNull(limit, "查询条数不能为空！");
+		log.info("查询文章列表,查询条数为{}",limit);
+		List<BlogArticle> articles = blogArticleMapper.selectList(new LambdaQueryWrapper<BlogArticle>()
+				.orderByDesc(BlogArticle::getPageView)
+				.last(limit != null, "limit "+limit)
+				);
+		return articles;
 	}
 
 	@Override
@@ -50,8 +61,9 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleMapper, BlogA
 		log.info("添加文章");
 		entity.setCreateTime(LocalDateTime.now());
 		entity.setModifyTime(LocalDateTime.now());
-		SysUser currentUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
+		SysUser currentUser = (SysUser) WebUtil.getSession().getAttribute(Constant.CURRENT_USER);
 		entity.setUserId(currentUser.getUserId());
+		entity.setHref("#");
 		return super.save(entity);
 	}
 
@@ -66,9 +78,35 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleMapper, BlogA
 
 	@Override
 	public boolean removeById(Serializable articleId) {
-		Assert.notNull(articleId,"要删除的articleId不能为null");
-		log.info("删除id为{}的article",articleId);
+		Assert.notNull(articleId, "要删除的articleId不能为null");
+		log.info("删除id为{}的article", articleId);
 		return super.removeById(articleId);
+	}
+
+	@Override
+	public List<BlogArticle> findHotArticle(Integer limit) {
+		log.info("查询热门文章,数量为{}",limit);
+		return blogArticleMapper.selectList(new LambdaQueryWrapper<BlogArticle>()
+				.orderByDesc(BlogArticle::getPageView)
+				.last("limit "+limit)
+				);
+	}
+
+	@Override
+	public List<BlogArticle> findRecentArticle(Integer limit) {
+		log.info("查询最近发布的文章，数量为{}",limit);
+		return blogArticleMapper.selectList(new LambdaQueryWrapper<BlogArticle>()
+				.orderByDesc(BlogArticle::getCreateTime)
+				.last("limit "+limit)
+				);
+	}
+
+	@Override
+	public IPage<BlogArticle> findByPageFrontend(Page<BlogArticle> page, BlogArticle blogArticle) {
+		log.info("博客前端分页查询文章{},{}",page.getCurrent(),page.getSize());
+		return blogArticleMapper.selectPage(page, new LambdaQueryWrapper<BlogArticle>()
+				.eq(null != blogArticle.getCategoryId(), BlogArticle::getCategoryId, blogArticle.getCategoryId())
+				);
 	}
 
 }

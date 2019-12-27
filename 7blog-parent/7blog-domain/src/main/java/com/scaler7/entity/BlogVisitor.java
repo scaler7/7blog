@@ -1,6 +1,8 @@
 package com.scaler7.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -84,6 +86,8 @@ public class BlogVisitor implements Serializable {
 
     @ApiModelProperty(value = "是否有效")
     private Integer isValid = 0;
-
-
+    
+    @TableField(exist = false)
+    @ApiModelProperty(value = "评论数量")
+    private Integer commentCount;
 }

@@ -1,6 +1,8 @@
 package com.scaler7.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -43,6 +45,9 @@ public class BlogArticle implements Serializable {
 
     @ApiModelProperty(value = "标题")
     private String title;
+    
+    @ApiModelProperty(value = "文章链接")
+    private String href;
 
     @ApiModelProperty(value = "markdown内容")
     private String contentMd;
@@ -80,6 +85,9 @@ public class BlogArticle implements Serializable {
 
     @ApiModelProperty(value = "是否有效 1有效0无效")
     private Integer isValid = 0;
+    
+    @TableField(exist = false)
+    private String userName;
 
 
 }

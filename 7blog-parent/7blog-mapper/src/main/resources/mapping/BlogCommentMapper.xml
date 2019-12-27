@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.scaler7.mapper.BlogCommentMapper">
-
+	
+	<select id="selectTop3VisitorsByCommentCount" resultType="com.scaler7.vo.BlogCommentVO">
+		SELECT visitor_id,COUNT(*) AS commentCount FROM blog_comment GROUP BY visitor_id ORDER BY COUNT(*) DESC
+	</select>
+	
 </mapper>

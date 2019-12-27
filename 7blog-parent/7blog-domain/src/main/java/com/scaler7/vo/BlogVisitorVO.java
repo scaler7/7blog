@@ -11,7 +11,9 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class BlogVisitorVO extends BlogVisitor {/**
+public class BlogVisitorVO extends BlogVisitor {
+	
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2711575184427668260L;

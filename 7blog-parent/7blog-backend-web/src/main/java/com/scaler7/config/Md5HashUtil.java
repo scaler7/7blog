@@ -1,4 +1,4 @@
-package com.scaler7.utils;
+package com.scaler7.config;
 
 import org.apache.shiro.crypto.hash.Md5Hash;
 

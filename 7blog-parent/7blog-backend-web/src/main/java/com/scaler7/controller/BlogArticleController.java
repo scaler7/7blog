@@ -40,7 +40,7 @@ public class BlogArticleController {
 			@RequestParam(defaultValue = "10") Integer size,
 			BlogArticleVO blogArticleVO) {
 		Page<BlogArticle> page = new Page<BlogArticle>(current, size);
-		IPage<BlogArticle> pageData = blogArticleService.findByPage(page,blogArticleVO);
+		IPage<BlogArticle> pageData = blogArticleService.findByPageBackend(page,blogArticleVO);
 		return new Result(pageData);
 	}
 	

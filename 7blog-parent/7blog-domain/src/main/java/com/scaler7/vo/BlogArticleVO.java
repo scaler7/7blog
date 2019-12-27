@@ -23,4 +23,6 @@ public class BlogArticleVO extends BlogArticle {
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:SS",timezone = "GMT+8")
 	private LocalDateTime endTime;
 	
+	private Long articleCount;
+	
 }

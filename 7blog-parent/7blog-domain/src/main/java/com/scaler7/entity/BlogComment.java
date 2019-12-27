@@ -1,8 +1,13 @@
 package com.scaler7.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -31,7 +36,7 @@ public class BlogComment implements Serializable {
     private Integer commentId;
 
     @ApiModelProperty(value = "评论者id")
-    private Integer visitorId;
+    private Long visitorId;
 
     @ApiModelProperty(value = "文章id")
     private Integer articleId;
@@ -46,7 +51,9 @@ public class BlogComment implements Serializable {
     private Integer likeCount;
 
     @ApiModelProperty(value = "评论时间")
-    private LocalDate createdTime;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:SS",timezone = "GMT+8")
+    private LocalDateTime createdTime;
 
     @ApiModelProperty(value = "审核通过1通过0未通过")
     private Integer isCheck;

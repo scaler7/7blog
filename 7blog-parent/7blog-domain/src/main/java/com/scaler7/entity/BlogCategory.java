@@ -1,6 +1,7 @@
 package com.scaler7.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -35,5 +36,8 @@ public class BlogCategory implements Serializable {
     @ApiModelProperty(value = "备注")
     private String remark;
 
-
+    @TableField(exist = false)
+    @ApiModelProperty(value = "所属该分类的文章总数")
+    private Long articleCount;
+    
 }
