@@ -2,15 +2,10 @@ package com.scaler7.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-
-import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.time.LocalDateTime;
-
 import org.springframework.format.annotation.DateTimeFormat;
-
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -36,13 +31,16 @@ public class BlogVisitor implements Serializable {
 
     @ApiModelProperty(value = "访客ID")
     @TableId(value = "visitor_id", type = IdType.AUTO)
-    private Long visitorId;
+    private Integer visitorId;
 
     @ApiModelProperty(value = "访客IP")
     private String ip;
 
     @ApiModelProperty(value = "访客名")
     private String visitorName;
+    
+    @ApiModelProperty(value = "性别")
+    private String gender;
 
     @ApiModelProperty(value = "访客网站")
     private String personalWebsite;
@@ -69,9 +67,6 @@ public class BlogVisitor implements Serializable {
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private LocalDateTime lastLoginTime;
 
-    @ApiModelProperty(value = "访客生日")
-    private LocalDate birth;
-
     @ApiModelProperty(value = "访客年龄")
     private Integer age;
 
@@ -79,7 +74,7 @@ public class BlogVisitor implements Serializable {
     private String nickname;
 
     @ApiModelProperty(value = "身份id")
-    private Integer identity;
+    private String openId;
 
     @ApiModelProperty(value = "是否允许发送通知")
     private Integer allowInform = 0;

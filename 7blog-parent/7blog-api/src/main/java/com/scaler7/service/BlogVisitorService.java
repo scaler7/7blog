@@ -25,4 +25,6 @@ public interface BlogVisitorService extends IService<BlogVisitor> {
 
 	List<BlogVisitor> findRecentVisitorList(Integer limit);
 
+	BlogVisitor findVisitorByOpenId(String openid);
+
 }

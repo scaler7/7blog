@@ -176,6 +176,7 @@
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
     padding: 1.25rem;
+    max-height: 240px;
 }
 .card .card-subtitle {
     font-size: 14px;
@@ -185,7 +186,7 @@
     margin-bottom: .5rem !important;
 }
 .card .card-title {
-    font-size: 20px;
+    font-size: 16px;
     line-height: 28px;
     margin-bottom: .75rem;
     font-weight: 500;

@@ -1,5 +1,5 @@
 // JavaScript Document
-
+iniParam();
 function iniParam() {
     var device = layui.device();
    

@@ -119,7 +119,15 @@
 				content: $("#editHtml").html(),
 				area: ['1000px','500px'],
 				success: function(layero, index){
-					form.val("articleForm",data);
+					form.val("articleForm",{
+						'allowComment' : data.allowComment,
+						'articleId' : data.articleId,
+						'categoryId' : data.categoryId,
+						'contentMd' : data.contentMd,
+						'isValid' : data.isValid,
+						'sort' : data.sort,
+						'title' : data.title
+					}); // 表单中的contentHtml不可赋值，提交更改时会出现bug
 					
 					$.get("/blog/category/list",function(rs){
 						$.each(rs.data, function (index, item) {
@@ -141,7 +149,8 @@
 					        // markdown: "xxxx",     // dynamic set Markdown text
 					        path : "/editor/lib/",  // Autoload modules mode, codemirror, marked... dependents libs path
 					        saveHTMLToTextarea : true,
-					        lineNumbers : true
+					        lineNumbers : true,
+					        emoji : true
 					    });
 					});
 				 },

@@ -9,10 +9,7 @@ package com.scaler7.common;
  */
 public class Constant {
 	
-	/**
-	 * 当前登陆用户key值
-	 */
-	public static final String CURRENT_USER = "currentUser";
+	
 	/**
 	 * 加密次数
 	 */
@@ -29,5 +26,6 @@ public class Constant {
 	 * 时间格式YYYY_MM_DD_HH_MM_SS
 	 */
 	public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+	
 	
 }

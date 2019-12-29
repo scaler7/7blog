@@ -1,4 +1,5 @@
 // JavaScript Document
+iniParam();
 var laypage;
 function categoryClick(categoryId){
    getPage(1,5,categoryId);
@@ -49,12 +50,12 @@ function setHtml(data){
 		         + '<div class="post-info">' 
 			     + '<div class="post-title">'
 			     + '<h3>'
-			     + '<a href="ArticleDetails.html">'+item.title+'</a>'
+			     + '<a href="/articleDetail/info/'+item.articleId+'">'+item.title+'</a>'
 			     + '</h3>'
 			     + '</div>'
 			     + '<div class="post-content">'
 			     + '<p>'
-			     + removeHtmlTag(item.contentHtml)
+			     + removeHtmlTagAndSubstr(item.contentHtml,50)
 			     + '</p>'
 			     + '</div>'
 			     + '<div class="blog-meta">'
@@ -70,7 +71,7 @@ function setHtml(data){
 		         + '</li>'
 		         + '</ul>'
 		         + '<div class="post-readmore">'
-		         + '<a href="/articleDetail/init">阅读更多</a>'
+		         + '<a href="/articleDetail/info/'+item.articleId+'">阅读更多</a>'
 		         + '</div>'
 		         + '</div>'
 		         + '</div>'
@@ -84,8 +85,17 @@ function setHtml(data){
 	$("#articleArea").append(strHtml)
 }
 
-function removeHtmlTag(str){
-	return str.replace(/<[^>]+>/g,"");  //正则去掉所有的html标记
+function removeHtmlTagAndSubstr(str,len){
+	str = str.replace(/<[^>]+>/g,"");  //正则去掉所有的html标记
+	if(str.length > 50){
+		str = str.substr(0,len)+"...";
+	}
+	return str;
+}
+
+function mysubStr(str){
+	str = str.length>50 ? str.substr(0,50)+"..." : str.substr(0,50);
+	return str;
 }
 
 function iniParam() {

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html><!-- InstanceBegin template="/Templates/Template.dwt" codeOutsideHTMLIsLocked="false" -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><!-- InstanceBegin template="/Templates/Template.dwt" codeOutsideHTMLIsLocked="false" -->
 <!-- InstanceBeginEditable name="head" -->
 <!-- InstanceEndEditable -->
 <head>
@@ -85,8 +85,8 @@
             <!-- 汉堡菜单 -->
           <input type="checkbox" id="togglebox" />
             <ul>
-                <li><a href="Index.html">网站首页</a></li>
-                <li><a href="Article.html">学无止境</a></li>
+                <li><a href="/">网站首页</a></li>
+                <li><a href="/article/init">学无止境</a></li>
                 <li><a href="Archive.html">文章归档</a></li>
                 <li><a href="Moments.html">瞬时说说</a></li>
                 <li><a href="Resources.html">资源分享</a></li>
@@ -121,28 +121,28 @@
 		
 		<div class="layui-container">
 			<div class="card details">
-				<h1 class="title text-center">Q-Blog v2.0 网站改版啦</h1>
+				<h1 class="title text-center" th:utext="${article.title}"></h1>
 				<div class="details-info">
 					<a target="_blank" href="http://www.qbl.link/Web/Home/Article/eec2e894-a324-466c-b250-e41afb55d5fd.html">
 						<i class="layui-icon layui-extend-fenlei"></i>
-						<span>随笔</span>
+						<span th:utext="${article.categoryName}">随笔</span>
 					</a>
-					<i class="layui-icon layui-icon-username"></i><span>Lonely</span>
-					<i class="layui-icon layui-extend-riqi"></i><span>2019-08-25 14:51:19</span>
+					<i class="layui-icon layui-icon-username"></i><span th:utext="${article.userName}"></span>
+					<i class="layui-icon layui-extend-riqi"></i><span th:utext="${article.createTime}"></span>
 					<i class="layui-icon layui-extend-wiappfangwenliang"></i>
-					<span id="click_count_text">20次</span>
+					<span id="click_count_text" th:utext="${article.pageView}"></span>
 					<a href="#am_comment">
 						<i class="layui-icon layui-icon-dialogue"></i>
-						<span id="comment_count_text">10条</span>
+						<span id="comment_count_text" th:utext="${article.commentCount}"></span>
 					</a>
 					<a href="#am_praise">
 						<i class="layui-icon layui-extend-dianzan"></i>
-						<span class="like_count_text">8</span>
+						<span class="like_count_text" th:utext="${article.likeCount}"></span>
 					</a>
 				</div>
 				<hr>
-				<div id="details-content" class="details-content">
-					<p style="text-indent: 2em;">
+				<div id="details-content" class="details-content" th:utext="${article.contentHtml}">
+					<!-- <p style="text-indent: 2em;">
 						Q-Blog v2.0版本终于更新啦，V1.0版本上线以后，总是有诸多令我感到不爽的地方，页面丑陋看上去就已经很不爽了，起初做网站的时候没有充分考虑到SEO优化，导致上线以后蜘蛛不能很好地去抓取网页内容，从而使得搜索引擎不收录，使用过程中网站的弊端开始一点一点暴露了出来……
 					</p>
 					<p style="text-indent: 2em;">
@@ -267,14 +267,14 @@ for (int i = 1; i &lt; x; i++) //这个循环打印下半部分的菱形行数
 Console.ReadKey();
 </pre>
 
-					
+			 -->		
 				</div>
 				
 				<div class="details-footer">
 					<div class="praise">
 						<span id="am_praise" class="target-fix">暗锚,解决锚点偏移</span> 
 						<p>如喜欢，就留下一颗心吧❤️🌹🌹🌹</p>
-						<button id="btnLike" type="button" class="layui-btn">LIKE&nbsp;|&nbsp; <span class="like_count_text">8</span>
+						<button id="btnLike" type="button" class="layui-btn">LIKE&nbsp;|&nbsp; <span class="like_count_text" th:utext="${article.likeCount}"></span>
 						</button>
 					</div>
 					<hr>
@@ -290,15 +290,15 @@ Console.ReadKey();
 				<h2 class="side-title">文章评论</h2>
 				<form class="layui-form blog-editor" lay-filter="formComment">
 					<div class="layui-form-item">
-						<textarea name="content" id="demo-1" placeholder="请输入内容" class="layui-textarea layui-hide"></textarea>
+						<textarea name="content" id="demo-0" placeholder="请输入内容" class="layui-textarea layui-hide"></textarea>
 					</div>
 					<div class="layui-form-item">
 						<button type="button" class="layui-btn" lay-submit lay-filter="formComment">提交留言</button>
 					</div>
 				</form>   
 				<!-- 评论列表 -->
-				<ul class="blog-comment">
-					<li>
+				<ul class="blog-comment" id="blog-comment">
+					<!-- <li>
 						<div class="comment-parent">
 							<a href="http://www.qbl.link"><img src="/resources/images/nan.png" alt="" /></a>
 							<div class="info">
@@ -465,7 +465,7 @@ Console.ReadKey();
 								</form>   
 							</div>
 						</div>
-					</li>
+					</li> -->
 				</ul>
 				<div id="page"></div>
 			</div>
@@ -473,48 +473,27 @@ Console.ReadKey();
 		
 		<script src="/resources/js/ArticleDetails.js"></script>
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		<!-- InstanceEndEditable -->    
     </section>
-   <footer>
-     <p><a href="http://www.qbl.link">Copyright &copy; 2019. Q-Blog All rights reserved.</a></p>
-    </footer>
-    <div id="suspension">
-        <div class="livechat-girl animated">
-          <img class="girl" src="/resources/images/a.png" oncontextmenu="return false;" ondragstart="return false;">
-            <div class="livechat-hint rd-notice-tooltip rd-notice-type-success rd-notice-position-left single-line show_hint">
-                <div class="rd-notice-content">嘿，来试试登录吧！</div>
-            </div>
-            <div class="animated-circles">
-                <div class="circle c-1"></div>
-                <div class="circle c-2"></div>
-                <div class="circle c-3"></div>
-            </div>
-        </div>
-    </div>
+    
+    <!-- 引入公共底部 -->
+   	<footer th:replace="/pages/common_footer :: footer"></footer> 
+    
+    <!-- 引入右侧登陆相关公共部分 -->	
+    <div id="suspension" th:insert="/pages/common_side :: side"></div>
+    
     <!-- 打字机特效js-->
 <script src="/resources/js/typewriter-special-effects.js"></script>
 <script src="/resources/js/Template.js"></script>
 <!-- 这个JS展示公告层用的，无关紧要可以删掉。 -->
 <script src="/resources/js/TempShowTip.js"></script>
+<script type="text/javascript" th:inline="javascript">
+var isLogin = [[${session.isLogin}]];
+var profilePhoto = [[${session.profilePhoto}]]
+var nickname = [[${session.nickname}]]
+var articleId = [[${article.articleId}]];
+getParams(articleId);
+initParams(isLogin,profilePhoto,nickname); // 写在这里是为了解决外联js无法使用thymeleaf取值的问题
+</script>
 </body>
 <!-- InstanceEnd --></html>

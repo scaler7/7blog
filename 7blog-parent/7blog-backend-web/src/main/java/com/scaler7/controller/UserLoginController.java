@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.scaler7.common.CodeMsg;
-import com.scaler7.common.Constant;
 import com.scaler7.common.Result;
+import com.scaler7.common.WebConstant;
 import com.scaler7.entity.SysUser;
 import com.scaler7.service.SysMenuService;
 import com.scaler7.vo.Menu;
@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("")
-public class LoginController {
+public class UserLoginController {
 	
 	@Autowired
 	SysMenuService sysMenuService;
@@ -45,7 +45,7 @@ public class LoginController {
 			subject.login(token);
 			SysUser currentUser = (SysUser) subject.getPrincipal();
 			System.out.println(currentUser);
-			session.setAttribute(Constant.CURRENT_USER, currentUser);
+			session.setAttribute(WebConstant.CURRENT_USER, currentUser);
 		} catch (AccountException e) { // 账号错误
 			return new Result(CodeMsg.LOGIN_ERROR);
 		} catch (CredentialsException e) { // 密码错误
@@ -59,7 +59,7 @@ public class LoginController {
 	@GetMapping("loadMenus")
 	@ApiOperation("拉取左侧菜单栏数据")
 	public Object loadMenus(HttpSession session) {
-		SysUser currentUser = (SysUser) session.getAttribute(Constant.CURRENT_USER); // 从session中获取当前登陆用户
+		SysUser currentUser = (SysUser) session.getAttribute(WebConstant.CURRENT_USER); // 从session中获取当前登陆用户
 		List<Menu> menus = sysMenuService.findMenusByUserId(currentUser.getUserId());
 		return new Result(menus);
 	}

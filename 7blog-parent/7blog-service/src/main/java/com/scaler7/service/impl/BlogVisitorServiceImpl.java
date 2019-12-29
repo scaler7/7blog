@@ -80,7 +80,7 @@ public class BlogVisitorServiceImpl extends ServiceImpl<BlogVisitorMapper, BlogV
 	public List<BlogVisitor> findTop3VisitorList() {
 		log.info("查询评论数最高的top3访客");
 		List<BlogCommentVO> commentVOs = blogCommentMapper.selectTop3VisitorsByCommentCount();
-		List<Long> visitorIds = new ArrayList<Long>();
+		List<Integer> visitorIds = new ArrayList<Integer>();
 		for (BlogComment blogComment  : commentVOs) {
 			visitorIds.add(blogComment.getVisitorId());
 		}
@@ -109,6 +109,15 @@ public class BlogVisitorServiceImpl extends ServiceImpl<BlogVisitorMapper, BlogV
 		return blogVisitorMapper.selectList(new LambdaQueryWrapper<BlogVisitor>()
 				.orderByDesc(BlogVisitor::getLastLoginTime)
 				.last("limit "+limit)
+				);
+	}
+
+	@Override
+	public BlogVisitor findVisitorByOpenId(String openid) {
+		Assert.notNull(openid, "openID不能为null");
+		log.info("根据openId:{}查询用户",openid);
+		return blogVisitorMapper.selectOne(new LambdaQueryWrapper<BlogVisitor>()
+				.eq(BlogVisitor::getOpenId, openid)
 				);
 	}
 

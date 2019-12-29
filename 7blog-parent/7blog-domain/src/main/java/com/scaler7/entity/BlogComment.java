@@ -1,7 +1,10 @@
 package com.scaler7.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -36,13 +39,16 @@ public class BlogComment implements Serializable {
     private Integer commentId;
 
     @ApiModelProperty(value = "评论者id")
-    private Long visitorId;
+    private Integer visitorId;
 
     @ApiModelProperty(value = "文章id")
     private Integer articleId;
 
     @ApiModelProperty(value = "父评论id")
     private Integer parentId;
+    
+    @ApiModelProperty(value = "回复的评论id")
+    private Integer replyId;
 
     @ApiModelProperty(value = "内容")
     private String content;
@@ -64,5 +70,20 @@ public class BlogComment implements Serializable {
     @ApiModelProperty(value = "是否有效1有效0失效")
     private Integer isValid;
 
+    @ApiModelProperty(value = "评论人名称")
+    @TableField(exist = false)
+    private String visitorName;
+    
+    @ApiModelProperty(value = "回复评论的评论人名称")
+    @TableField(exist = false)
+    private String replyVisitorName;
+    
+    @ApiModelProperty(value = "评论人头像")
+    @TableField(exist = false)
+    private String visitorProfilePhoto;
+    
+    @ApiModelProperty(value = "子评论集合")
+    @TableField(exist = false)
+    private List<BlogComment> childrens;
 
 }

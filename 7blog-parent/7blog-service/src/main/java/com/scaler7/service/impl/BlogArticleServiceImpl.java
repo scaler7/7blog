@@ -1,9 +1,12 @@
 package com.scaler7.service.impl;
 
-import com.scaler7.common.Constant;
+import com.scaler7.common.WebConstant;
 import com.scaler7.entity.BlogArticle;
+import com.scaler7.entity.BlogCategory;
 import com.scaler7.entity.SysUser;
 import com.scaler7.mapper.BlogArticleMapper;
+import com.scaler7.mapper.BlogCategoryMapper;
+import com.scaler7.mapper.SysUserMapper;
 import com.scaler7.service.BlogArticleService;
 import com.scaler7.utils.WebUtil;
 import com.scaler7.vo.BlogArticleVO;
@@ -34,6 +37,10 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleMapper, BlogA
 
 	@Autowired
 	BlogArticleMapper blogArticleMapper;
+	@Autowired
+	BlogCategoryMapper blogcategoryMapper;
+	@Autowired
+	SysUserMapper sysUserMapper;
 
 	@Override
 	public IPage<BlogArticle> findByPageBackend(Page<BlogArticle> page, BlogArticleVO blogArticleVO) {
@@ -61,7 +68,7 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleMapper, BlogA
 		log.info("添加文章");
 		entity.setCreateTime(LocalDateTime.now());
 		entity.setModifyTime(LocalDateTime.now());
-		SysUser currentUser = (SysUser) WebUtil.getSession().getAttribute(Constant.CURRENT_USER);
+		SysUser currentUser = (SysUser) WebUtil.getSession().getAttribute(WebConstant.CURRENT_USER);
 		entity.setUserId(currentUser.getUserId());
 		entity.setHref("#");
 		return super.save(entity);
@@ -81,6 +88,18 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleMapper, BlogA
 		Assert.notNull(articleId, "要删除的articleId不能为null");
 		log.info("删除id为{}的article", articleId);
 		return super.removeById(articleId);
+	}
+	
+	@Override
+	public BlogArticle getById(Serializable id) {
+		Assert.notNull(id, "查询id不能为null");
+		log.info("查询id为{}的article",id);
+		BlogArticle blogArticle = super.getById(id);
+		BlogCategory blogCategory = blogcategoryMapper.selectById(blogArticle.getCategoryId());
+		SysUser sysUser = sysUserMapper.selectById(blogArticle.getUserId());
+		blogArticle.setCategoryName(blogCategory.getCategoryName());
+		blogArticle.setUserName(sysUser.getUserName());
+		return blogArticle;
 	}
 
 	@Override
@@ -106,6 +125,7 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleMapper, BlogA
 		log.info("博客前端分页查询文章{},{}",page.getCurrent(),page.getSize());
 		return blogArticleMapper.selectPage(page, new LambdaQueryWrapper<BlogArticle>()
 				.eq(null != blogArticle.getCategoryId(), BlogArticle::getCategoryId, blogArticle.getCategoryId())
+				.orderByDesc(BlogArticle::getCreateTime)
 				);
 	}
 

@@ -1,9 +1,63 @@
-﻿// JavaScript Document
+﻿var isLogin;
+var profilePhoto;
+var nickname;
+function initParams(isLogin,profilePhoto,nickname){
+	isLogin = isLogin;
+	profilePhoto = profilePhoto;
+	nickname = nickname;
+}
 
 layui.use(['element', 'laypage', 'form', 'util', 'layer', 'flow','table','layedit'], function () {
+	// JavaScript Document
+
+$(function(){
+	setStyle(isLogin);
+})
+
+//登录图标
+var anim = setInterval(function () {
+    if ($(".animated-circles").hasClass("animated")) {
+        $(".animated-circles").removeClass("animated");
+    } else {
+        $(".animated-circles").addClass('animated');
+    }
+}, 3000);
+var wait = setInterval(function () {
+    $(".livechat-hint").removeClass("show_hint").addClass("hide_hint");
+    clearInterval(wait);
+}, 4500);
+$(".livechat-girl").hover(function () {
+    clearInterval(wait);
+    $(".livechat-hint").removeClass("hide_hint").addClass("show_hint");
+}, function () {
+    $(".livechat-hint").removeClass("show_hint").addClass("hide_hint");
+}).click(function () {
+    login();
+});
+
+
+//登录事件
+function login() {
+	window.location.href = "/qq/oauth";
+}
+
+//设置样式
+function setStyle(flag) {
+    if (!flag) { //未登录
+        $('.girl').attr("src", "/resources/images/a.png").css("border-radius", "0px");
+        $('.livechat-girl').css({ right: "-35px", bottom: "75px" }).removeClass("red-dot");
+        $('.rd-notice-content').text('嘿，来试试登录吧！');
+        return;
+    }
+    clearInterval(anim);
+	$('.girl').attr("src", profilePhoto).css("border-radius", "50px");
+	$('.rd-notice-content').text('欢迎您,'+nickname+"!");
+	$('.livechat-girl').css({ right: "0px", bottom: "80px" });	
+}
+	
     try {
         var util = layui.util, layer = layui.layer;
-	console.log("Q-Blog官网：www.qbl.link");	
+        console.log("7Blog官网：http://scaler7.online");	
         $(document).ready(function () { //DOM树加载完毕执行，不必等到页面中图片或其他外部文件都加载完毕
             //页面加载完成后，速度太快会导到loading层闪烁，影响体验，所以在此加上500毫秒延迟
             setTimeout(function () { $("#loading").hide(); }, 500);
@@ -71,47 +125,6 @@ layui.use(['element', 'laypage', 'form', 'util', 'layer', 'flow','table','layedi
             });
         }
 
-        iniParam();
-
-        //登录图标
-        var anim = setInterval(function () {
-            if ($(".animated-circles").hasClass("animated")) {
-                $(".animated-circles").removeClass("animated");
-            } else {
-                $(".animated-circles").addClass('animated');
-            }
-        }, 3000);
-        var wait = setInterval(function () {
-            $(".livechat-hint").removeClass("show_hint").addClass("hide_hint");
-            clearInterval(wait);
-        }, 4500);
-        $(".livechat-girl").hover(function () {
-            clearInterval(wait);
-            $(".livechat-hint").removeClass("hide_hint").addClass("show_hint");
-        }, function () {
-            $(".livechat-hint").removeClass("show_hint").addClass("hide_hint");
-        }).click(function () {
-            login();
-        });
-
-        //设置样式
-        function setStyle(flag) {
-            if (!flag) { //未登录
-                $('.girl').attr("src", "images/a.png").css("border-radius", "0px");
-                $('.livechat-girl').css({ right: "-35px", bottom: "75px" }).removeClass("red-dot");
-                $('.rd-notice-content').text('嘿，来试试登录吧！');
-                return;
-            }
-            clearInterval(anim);
-			$('.girl').attr("src", "images/nan.png").css("border-radius", "50px");
-			$('.rd-notice-content').text('欢迎您，渣渣辉！');
-			$('.livechat-girl').css({ right: "0px", bottom: "80px" });	
-        }
-        //登录事件
-        function login() {
-			layer.msg("登录成功！");
-			setStyle(true);
-        }
 
     }
     catch (e) {
