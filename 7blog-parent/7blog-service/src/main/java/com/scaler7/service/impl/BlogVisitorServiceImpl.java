@@ -96,6 +96,9 @@ public class BlogVisitorServiceImpl extends ServiceImpl<BlogVisitorMapper, BlogV
 		}
 		Collections.sort(top3Visitors, new Comparator<BlogVisitor>() {
 			public int compare(BlogVisitor v1,BlogVisitor v2) {
+				if(v1.getCommentCount() == null || v2.getCommentCount() == null) {
+					return 0;
+				}
 				return v2.getCommentCount() - v1.getCommentCount();
 			}
 		}); // 将集合按照评论数量降序排列

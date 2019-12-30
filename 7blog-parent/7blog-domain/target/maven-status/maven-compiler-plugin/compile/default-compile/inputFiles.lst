@@ -1,8 +1,13 @@
 E:\blog\7blog-parent\7blog-domain\src\main\java\com\scaler7\entity\BlogComment.java
+E:\blog\7blog-parent\7blog-domain\src\main\java\com\scaler7\vo\Menu.java
 E:\blog\7blog-parent\7blog-domain\src\main\java\com\scaler7\entity\SysUserRole.java
-E:\blog\7blog-parent\7blog-domain\src\main\java\com\scaler7\entity\BlogArticle.java
 E:\blog\7blog-parent\7blog-domain\src\main\java\com\scaler7\entity\BlogVisitor.java
 E:\blog\7blog-parent\7blog-domain\src\main\java\com\scaler7\entity\SysRole.java
-E:\blog\7blog-parent\7blog-domain\src\main\java\com\scaler7\entity\SysMenu.java
 E:\blog\7blog-parent\7blog-domain\src\main\java\com\scaler7\entity\SysRoleMenu.java
 E:\blog\7blog-parent\7blog-domain\src\main\java\com\scaler7\entity\SysUser.java
+E:\blog\7blog-parent\7blog-domain\src\main\java\com\scaler7\vo\BlogCommentVO.java
+E:\blog\7blog-parent\7blog-domain\src\main\java\com\scaler7\vo\BlogArticleVO.java
+E:\blog\7blog-parent\7blog-domain\src\main\java\com\scaler7\vo\BlogVisitorVO.java
+E:\blog\7blog-parent\7blog-domain\src\main\java\com\scaler7\entity\BlogArticle.java
+E:\blog\7blog-parent\7blog-domain\src\main\java\com\scaler7\entity\BlogCategory.java
+E:\blog\7blog-parent\7blog-domain\src\main\java\com\scaler7\entity\SysMenu.java

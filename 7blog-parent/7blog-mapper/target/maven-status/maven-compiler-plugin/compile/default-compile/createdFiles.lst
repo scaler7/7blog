@@ -1,0 +1,9 @@
+com\scaler7\mapper\BlogArticleMapper.class
+com\scaler7\mapper\SysRoleMapper.class
+com\scaler7\mapper\SysUserMapper.class
+com\scaler7\mapper\BlogVisitorMapper.class
+com\scaler7\mapper\SysRoleMenuMapper.class
+com\scaler7\mapper\BlogCommentMapper.class
+com\scaler7\mapper\SysMenuMapper.class
+com\scaler7\mapper\BlogCategoryMapper.class
+com\scaler7\mapper\SysUserRoleMapper.class

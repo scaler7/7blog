@@ -6,4 +6,8 @@
 		SELECT category_id,COUNT(*) AS articleCount FROM blog_article GROUP BY category_id
 	</select>
 	
+	<update id="increCommentCount">
+		UPDATE blog_article SET comment_count = comment_count+1 WHERE article_id = #{articleId};
+	</update>
+	
 </mapper>

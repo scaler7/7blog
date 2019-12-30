@@ -1,3 +1,8 @@
-com\scaler7\config\SwaggerConfig.class
-com\scaler7\config\SwaggerProperty.class
-META-INF\spring-configuration-metadata.json
+com\scaler7\common\WebCommons.class
+com\scaler7\common\WebConstant.class
+com\scaler7\utils\WebUtil.class
+com\scaler7\config\MybatisConfig.class
+com\scaler7\common\Constant.class
+com\scaler7\utils\CommonUtils.class
+com\scaler7\common\Result.class
+com\scaler7\common\CodeMsg.class

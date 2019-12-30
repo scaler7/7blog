@@ -75,30 +75,9 @@
             </div>
         </div>
     </div>
-    <header>
-        <nav>
-            <div class="logo">
-              <a target='_blank' href="Index.html">
-                    <img src="/resources/images/logo.png" oncontextmenu="return false;" ondragstart="return false;" />
-                </a>
-            </div>
-            <!-- 汉堡菜单 -->
-          <input type="checkbox" id="togglebox" />
-            <ul>
-                <li><a href="/">网站首页</a></li>
-                <li><a href="/article/init">学无止境</a></li>
-                <li><a href="Archive.html">文章归档</a></li>
-                <li><a href="Moments.html">瞬时说说</a></li>
-                <li><a href="Resources.html">资源分享</a></li>
-                <li><a href="About.html">关于本站</a></li>
-            </ul>
-          <label class="menu" for="togglebox">
-                <i class="layui-icon layui-extend-hamburg-menu"></i>
-            </label>
-        </nav>
-        <div class="clearfix"></div>
-    </header>
-<section class="bg-overlay layui-hide">
+    <!-- 引入公共头部 -->
+    <header th:replace="pages/common_header :: header"></header> 
+	<section class="bg-overlay layui-hide">
         <div class="overlay"></div>
         <div class="layui-row text py-5">
             <p class="lead">Keep on going never give up.</p>
@@ -477,10 +456,10 @@ Console.ReadKey();
     </section>
     
     <!-- 引入公共底部 -->
-   	<footer th:replace="/pages/common_footer :: footer"></footer> 
+   	<footer th:replace="pages/common_footer :: footer"></footer> 
     
     <!-- 引入右侧登陆相关公共部分 -->	
-    <div id="suspension" th:insert="/pages/common_side :: side"></div>
+    <div id="suspension" th:insert="pages/common_side :: side"></div>
     
     <!-- 打字机特效js-->
 <script src="/resources/js/typewriter-special-effects.js"></script>

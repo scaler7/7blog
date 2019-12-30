@@ -1,0 +1,9 @@
+com\scaler7\service\BlogCategoryService.class
+com\scaler7\service\SysMenuService.class
+com\scaler7\service\BlogCommentService.class
+com\scaler7\service\BlogArticleService.class
+com\scaler7\service\SysRoleService.class
+com\scaler7\service\SysUserRoleService.class
+com\scaler7\service\SysRoleMenuService.class
+com\scaler7\service\BlogVisitorService.class
+com\scaler7\service\SysUserService.class

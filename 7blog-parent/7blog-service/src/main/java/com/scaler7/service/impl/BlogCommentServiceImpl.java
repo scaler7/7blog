@@ -2,6 +2,7 @@ package com.scaler7.service.impl;
 
 import com.scaler7.entity.BlogComment;
 import com.scaler7.entity.BlogVisitor;
+import com.scaler7.mapper.BlogArticleMapper;
 import com.scaler7.mapper.BlogCommentMapper;
 import com.scaler7.mapper.BlogVisitorMapper;
 import com.scaler7.service.BlogCommentService;
@@ -13,6 +14,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -41,6 +44,8 @@ public class BlogCommentServiceImpl extends ServiceImpl<BlogCommentMapper, BlogC
 	BlogCommentMapper blogCommentMapper;
 	@Autowired
 	BlogVisitorMapper blogVisitorMapper;
+	@Autowired
+	BlogArticleMapper blogArticleMapper;
 	
 	@Override
 	public List<BlogComment> findCommentsList(Integer limit) {
@@ -53,6 +58,21 @@ public class BlogCommentServiceImpl extends ServiceImpl<BlogCommentMapper, BlogC
 		return comments;
 	}
 	
+	@Override
+	public boolean save(BlogComment entity) {
+		Assert.notNull(entity, "要添加的数据不能为null");
+		log.info("添加评论");
+		entity.setCreatedTime(LocalDateTime.now());
+		entity.setIsRead(1);
+		entity.setIsCheck(1);
+		boolean isSuccess = super.save(entity);
+		if(isSuccess) {
+			blogArticleMapper.increCommentCount(entity.getArticleId()); // 更新文章的评论数量
+		}
+		return isSuccess;
+	}
+	
+	@Override
 	public IPage<BlogComment> findByPageAndArticleId(IPage<BlogComment> page, Integer articleId) {
 		Map<SFunction<BlogComment,?>, Object> params = new HashMap<SFunction<BlogComment,?>, Object>();
 		//构造查询条件
@@ -63,7 +83,7 @@ public class BlogCommentServiceImpl extends ServiceImpl<BlogCommentMapper, BlogC
 		IPage<BlogComment> pageData = blogCommentMapper.selectPage(page, new LambdaQueryWrapper<BlogComment>()
 				.allEq(params)
 				.eq(BlogComment::getParentId, 0)
-				.orderByDesc(BlogComment::getCreatedTime)
+				.orderByAsc(BlogComment::getCreatedTime)
 				); // 查询所有符合条件的一级评论
 		
 		List<BlogComment> parentComments = pageData.getRecords();
@@ -117,7 +137,7 @@ public class BlogCommentServiceImpl extends ServiceImpl<BlogCommentMapper, BlogC
 			}
 			Collections.sort(childrens, new Comparator<BlogComment>() {
 				public int compare(BlogComment v1,BlogComment v2) {
-					return v2.getCreatedTime().compareTo(v1.getCreatedTime()); // 按评论时间排序
+					return v1.getCreatedTime().compareTo(v2.getCreatedTime()); // 按评论时间排序
 				}
 			});
 			parentComment.setChildrens(childrens); // 注入子评论

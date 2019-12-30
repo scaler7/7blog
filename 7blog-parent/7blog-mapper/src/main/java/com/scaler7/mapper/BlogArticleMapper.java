@@ -5,6 +5,8 @@ import com.scaler7.vo.BlogArticleVO;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -18,5 +20,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface BlogArticleMapper extends BaseMapper<BlogArticle> {
 	
 	public List<BlogArticleVO> selectCountGroupByCategory();
+	
+	public void increCommentCount(@Param("articleId")Integer articleId);
 	
 }

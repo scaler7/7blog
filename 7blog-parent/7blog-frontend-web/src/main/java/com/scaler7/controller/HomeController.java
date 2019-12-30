@@ -25,7 +25,7 @@ public class HomeController {
 	@Autowired
 	BlogVisitorService blogVisitorService;
 
-	@RequestMapping("")
+	@RequestMapping("/")
 	public String home(Model model) {
 		List<BlogArticle> articles = blogArticleService.findArticleList(6);
 		List<BlogComment> comments = blogCommentService.findCommentsList(9);
@@ -35,7 +35,7 @@ public class HomeController {
 		model.addAttribute("comments", comments);
 		model.addAttribute("top3Visitors", top3Visitors);
 		model.addAttribute("recentVisitors", recentVisitors);
-		return "pages/index";
+		return "pages/Index";
 	}
 	
 }
