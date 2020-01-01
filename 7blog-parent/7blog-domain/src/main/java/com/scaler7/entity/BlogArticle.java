@@ -48,6 +48,9 @@ public class BlogArticle implements Serializable {
     
     @ApiModelProperty(value = "文章链接")
     private String href;
+    
+    @ApiModelProperty(value = "文章图片链接")
+    private String articleImg;
 
     @ApiModelProperty(value = "markdown内容")
     private String contentMd;

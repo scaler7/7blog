@@ -36,11 +36,11 @@ public class BlogArticleController {
 	@GetMapping("page")
 	@ApiOperation("分页查询文章")
 	public Object findByPage(
-			@RequestParam(defaultValue = "1") Integer current,
-			@RequestParam(defaultValue = "10") Integer size,
+			@RequestParam(defaultValue = "1") Integer page,
+			@RequestParam(defaultValue = "10") Integer limit,
 			BlogArticleVO blogArticleVO) {
-		Page<BlogArticle> page = new Page<BlogArticle>(current, size);
-		IPage<BlogArticle> pageData = blogArticleService.findByPageBackend(page,blogArticleVO);
+		Page<BlogArticle> pages = new Page<BlogArticle>(page, limit);
+		IPage<BlogArticle> pageData = blogArticleService.findByPageBackend(pages,blogArticleVO);
 		return new Result(pageData);
 	}
 	

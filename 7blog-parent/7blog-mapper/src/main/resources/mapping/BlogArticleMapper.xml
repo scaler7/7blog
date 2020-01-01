@@ -10,4 +10,12 @@
 		UPDATE blog_article SET comment_count = comment_count+1 WHERE article_id = #{articleId};
 	</update>
 	
+	<update id="increPageView">
+		UPDATE blog_article SET page_view = page_view+1 WHERE article_id = #{articleId};
+	</update>
+	
+	<update id="increLikeCount">
+		UPDATE blog_article SET like_count = like_count+1 WHERE article_id = #{articleId};
+	</update>
+	
 </mapper>

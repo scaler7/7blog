@@ -31,7 +31,7 @@
 <!-- editor.md -->
 <script src="/editor/editormd.min.js"></script>
 <script>
-	layui.use(["element", "table", "form", "laydate", "layer", "okUtils", "okMock","jquery"], function () {
+	layui.use(["element", "table", "form", "laydate", "layer", "okUtils", "okMock","jquery","upload"], function () {
 		let $ = layui.jquery;
 		let table = layui.table;
 		let form = layui.form;
@@ -40,6 +40,7 @@
 		let layer = layui.layer;
 		let okUtils = layui.okUtils;
 		let okMock = layui.okMock;
+		let upload = layui.upload;
 		okLoading.close();
 		util.fixbar({});
 
@@ -56,10 +57,14 @@
 			size: "sm",
 			cols: [[
 				{type: "checkbox", fixed: "left"},
-				{field: "articleId", title: "ID", width: 170, sort: true},
+				{field: "articleId", title: "ID", width: 70, sort: true},
 				{field: "title", title: "标题", width: 150},
+				{field: "href", title: "文章链接", width: 150},
+				{field: "articleImg", title: "图片链接", width: 150},
 				{field: "userId", title: "发布者ID", width: 100},
 				{field: "pageView", title: "阅读量", width: 80},
+				{field: "commentCount", title: "评论数", width: 80},
+				{field: "likeCount", title: "点赞数", width: 80},
 				{field: "isTop", title: "是否置顶", width: 100, align: "center", templet: "#topTpl"},
 				{field: "isValid", title: "状态", width: 110, align: "center", templet: "#statusTpl"},
 				{field: "createTime", title: "创建时间", width: 150},
@@ -78,7 +83,6 @@
 			    };
 			 },
 			done: function (res, curr, count) {
-				console.log(res, curr, count)
 			}
 		});
 
@@ -113,12 +117,33 @@
 		}
 
 		function edit(data) {
-			console.log(data);
 		var editLayerIndex=layer.open({
 				type: 1,
 				content: $("#editHtml").html(),
 				area: ['1000px','500px'],
 				success: function(layero, index){
+					// 绑定上传元素
+					var uploadInst = upload.render({
+					    elem: '#uploadImg' //绑定元素
+					    ,url: '/file/upload' //上传接口
+					    ,choose: function(obj){
+					    	obj.preview(function(index, file, result){
+					    		$("#uploadImg").attr('src',result); // 预览图片
+					    	});
+					    }
+					    ,done: function(rs){
+					   		if(rs.code != 200){
+					   			layer.msg("图片上传失败！")
+					   			return false;
+					   		}
+					   		layer.msg("图片上传成功！");
+					   		$("#articleImg").attr('value',rs.data);
+					    }
+					    ,error: function(){
+					      layer.msg("发生异常！")
+					    }
+					});
+					
 					form.val("articleForm",{
 						'allowComment' : data.allowComment,
 						'articleId' : data.articleId,
@@ -128,7 +153,7 @@
 						'sort' : data.sort,
 						'title' : data.title
 					}); // 表单中的contentHtml不可赋值，提交更改时会出现bug
-					
+					$("#uploadImg").attr("src",data.articleImg);
 					$.get("/blog/category/list",function(rs){
 						$.each(rs.data, function (index, item) {
 		        			// 追加option节点 
@@ -215,6 +240,11 @@
 	<!--form表单-->
 	<form class="layui-form layui-form-pane ok-form" lay-filter="articleForm" id = "articleForm">
 		<div class="layui-form-item">
+			<div class="layui-input-inline">
+				<img alt="" src="/images/upload.jpg" id="uploadImg" width="300" height="200">
+			</div>
+		</div>
+		<div class="layui-form-item">
 			<input type="hidden" name="articleId">
 			<label class="layui-form-label">标题</label>
 			<div class="layui-input-block">
@@ -252,6 +282,7 @@
 				</div>
 			<div class="clearfix"></div>
 			</div>
+		<input type="hidden" name="articleImg" id="articleImg">
 	</form>
 </script>
 <!-- 链接模板 -->

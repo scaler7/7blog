@@ -36,7 +36,8 @@ layui.use(['layer','layedit','laypage','form'], function(){
 							visitorId : rs.data,
 							articleId : articleId,
 							parentId : 0,
-							content : content
+							content : content,
+							type : 1
 							}
 					params = JSON.stringify(params);
 					$.ajax({
@@ -78,7 +79,8 @@ layui.use(['layer','layedit','laypage','form'], function(){
 							articleId : articleId,
 							parentId : parentId,
 							replyId : replyId,
-							content : content
+							content : content,
+							type : 1
 							}
 					params = JSON.stringify(params);
 					$.ajax({
@@ -139,9 +141,9 @@ layui.use(['layer','layedit','laypage','form'], function(){
 				idArr.push(parent.commentId);
 				strHtml += '<li>'
 						 + '<div class="comment-parent">'
-						 + '<a href="http://www.qbl.link"><img src="'+parent.visitorProfilePhoto+'" alt="" /></a>'
+						 + '<a href="'+parent.visitorPersonalWebsite+'"><img src="'+parent.visitorProfilePhoto+'" alt="" /></a>'
 						 + '<div class="info">'
-						 + '<span class="username"><a href="http://www.qbl.link">'+parent.visitorName+'</a></span>'
+						 + '<span class="username"><a href="'+parent.visitorPersonalWebsite+'">'+parent.visitorName+'</a></span>'
 						 + isBlogger(parent.visitorId)
 						 + '</div>'
 						 + '<div class="content comment-text">'
@@ -176,11 +178,11 @@ layui.use(['layer','layedit','laypage','form'], function(){
 					$.each(childs,function(indexChild,child){
 						idArr.push(child.commentId);
 						strHtml += '<div class="comment-child">'
-								 + '<a href="http://www.qbl.link"><img src="'+child.visitorProfilePhoto+'" alt="" /></a>'
+								 + '<a href="'+child.visitorPersonalWebsite+'"><img src="'+child.visitorProfilePhoto+'" alt="" /></a>'
 								 + '<div class="info">'
-								 + '<span class="username"><a href="http://www.qbl.link">'+child.visitorName+'</a></span>'
+								 + '<span class="username"><a href="'+child.visitorPersonalWebsite+'">'+child.visitorName+'</a></span>'
 								 + isBlogger(child.visitorId)
-								 + '<span>回复<a href="http://www.qbl.link" class="to-username">'+child.replyVisitorName+'</a>：</span>'
+								 + '<span>回复<a href="'+child.replyPersonalWebsite+'" class="to-username">'+child.replyVisitorName+'</a>：</span>'
 								 + '<span class="comment-text">'+child.content+'</span>'
 								 + '</div>'
 								 + '<p class="info">'
@@ -249,7 +251,7 @@ layui.use(['layer','layedit','laypage','form'], function(){
 			hljs.initHighlighting(); //对页面上的所有块应用突出显示
 		    //hljs.initHighlightingOnLoad(); //页面加载时执行代码高亮
 		}
-
+		
 }); 
 
 function replyBtnClick(t){
@@ -264,6 +266,31 @@ function replyBtnClick(t){
 		$(t).parent().next().addClass("layui-hide");
 		$(t).text('回复');
 	}
+}
+
+function like(artcileId,likeCount){
+	$.get("/checkLogin",function(rs){
+		if(rs.code != 200){
+			layer.msg("您还没有登录，请先点击右侧小人登陆");
+			return false
+		}
+		$.ajax({
+			url: "/articleDetail/like",
+			type: "PUT",
+			data: {articleId : articleId},
+			success: function(rs){
+				if(rs.code == 200){
+					layer.msg("谢谢你啦")
+					//document.getElementById("like_count_text").innerText=likeCount+1;
+					$("#like_count_text").text(likeCount+1);
+					$('#btnLike').attr('disabled',"true"); // 禁用按钮
+					$("#btnLike").addClass("layui-btn-disabled"); // 添加layui禁用样式
+				}else{
+					layer.msg("服务器出了点小差")
+				}
+			}
+		})
+	});
 }
 	
 

@@ -1,5 +1,6 @@
 package com.scaler7.service.impl;
 
+import com.scaler7.common.Constant;
 import com.scaler7.common.WebConstant;
 import com.scaler7.entity.BlogArticle;
 import com.scaler7.entity.BlogCategory;
@@ -71,7 +72,12 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleMapper, BlogA
 		SysUser currentUser = (SysUser) WebUtil.getSession().getAttribute(WebConstant.CURRENT_USER);
 		entity.setUserId(currentUser.getUserId());
 		entity.setHref("#");
-		return super.save(entity);
+		boolean isSuccess = super.save(entity);
+		if(isSuccess) {
+			entity.setHref(Constant.ARTICLE_HREF_PREFIX+entity.getArticleId());
+			super.updateById(entity);
+		}
+		return isSuccess;
 	}
 
 	@Override
@@ -94,6 +100,7 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleMapper, BlogA
 	public BlogArticle getById(Serializable id) {
 		Assert.notNull(id, "查询id不能为null");
 		log.info("查询id为{}的article",id);
+		blogArticleMapper.increPageView(id); // 改变浏览量
 		BlogArticle blogArticle = super.getById(id);
 		BlogCategory blogCategory = blogcategoryMapper.selectById(blogArticle.getCategoryId());
 		SysUser sysUser = sysUserMapper.selectById(blogArticle.getUserId());
@@ -128,5 +135,13 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleMapper, BlogA
 				.orderByDesc(BlogArticle::getCreateTime)
 				);
 	}
+
+	@Override
+	public void updateLikeCount(Integer articleId) {
+		Assert.notNull(articleId, "点赞的文章id不能为null");
+		log.info("更新id为{}文章的点赞数量",articleId);
+		blogArticleMapper.increLikeCount(articleId);
+	}
+
 
 }

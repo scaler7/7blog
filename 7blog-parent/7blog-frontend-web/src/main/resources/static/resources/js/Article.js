@@ -44,7 +44,7 @@ function setHtml(data){
 		         + '<div class="inner-post">'
 		         + '<div class="post-img">'
 		         + '<a href="ArticleDetails.html">'
-		         + '<img src="/resources/images/test.jpg" alt="">'
+		         + '<img src="'+getImgSrc(item.articleImg)+'" alt="">'
 		         + '</a>'
 		         + '</div>'
 		         + '<div class="post-info">' 
@@ -96,6 +96,13 @@ function removeHtmlTagAndSubstr(str,len){
 function mysubStr(str){
 	str = str.length>50 ? str.substr(0,50)+"..." : str.substr(0,50);
 	return str;
+}
+
+function getImgSrc(articleImg){
+	if(articleImg == null || articleImg == ''){
+		return "/resources/images/img03.jpg"
+	}
+	return articleImg;
 }
 
 function iniParam() {

@@ -80,6 +80,9 @@ public class BlogVisitorServiceImpl extends ServiceImpl<BlogVisitorMapper, BlogV
 	public List<BlogVisitor> findTop3VisitorList() {
 		log.info("查询评论数最高的top3访客");
 		List<BlogCommentVO> commentVOs = blogCommentMapper.selectTop3VisitorsByCommentCount();
+		if(CollectionUtil.isEmpty(commentVOs)) {
+			return new ArrayList<BlogVisitor>();
+		}
 		List<Integer> visitorIds = new ArrayList<Integer>();
 		for (BlogComment blogComment  : commentVOs) {
 			visitorIds.add(blogComment.getVisitorId());

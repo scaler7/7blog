@@ -37,11 +37,11 @@ public class BlogVisitorController {
 	@GetMapping("page")
 	@ApiOperation("分页查询访客")
 	public Object findByPage(
-			@RequestParam(defaultValue = "1") Integer current,
-			@RequestParam(defaultValue = "10") Integer size,
+			@RequestParam(defaultValue = "1") Integer page,
+			@RequestParam(defaultValue = "10") Integer limit,
 			BlogVisitorVO blogVisitorVO) {
-		Page<BlogVisitor> page = new Page<BlogVisitor>(current, size);
-		IPage<BlogVisitor> pageData = blogVisitorService.findByPage(page,blogVisitorVO);
+		Page<BlogVisitor> pages = new Page<BlogVisitor>(page, limit);
+		IPage<BlogVisitor> pageData = blogVisitorService.findByPage(pages,blogVisitorVO);
 		return new Result(pageData);
 	}
 	

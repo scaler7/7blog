@@ -1,5 +1,6 @@
 package com.scaler7.service.impl;
 
+import com.scaler7.common.Constant;
 import com.scaler7.entity.BlogComment;
 import com.scaler7.entity.BlogVisitor;
 import com.scaler7.mapper.BlogArticleMapper;
@@ -55,6 +56,26 @@ public class BlogCommentServiceImpl extends ServiceImpl<BlogCommentMapper, BlogC
 				.orderByDesc(BlogComment::getCreatedTime)
 				.last(limit != null, "limit "+limit)
 				);
+		if(CollectionUtil.isEmpty(comments)) {
+			return new ArrayList<BlogComment>();
+		}
+		Set<Integer> visitorIds = new HashSet<Integer>();
+		for (BlogComment blogComment : comments) {
+			visitorIds.add(blogComment.getVisitorId());
+		}
+		List<BlogVisitor> visitors = blogVisitorMapper.selectList(new LambdaQueryWrapper<BlogVisitor>()
+				.eq(BlogVisitor::getIsValid, 1)
+				.in(BlogVisitor::getVisitorId, visitorIds)
+				);
+		for (BlogVisitor visitor : visitors) {
+			for (BlogComment comment : comments) {
+				if(visitor.getVisitorId() == comment.getVisitorId()) {
+					comment.setVisitorName(visitor.getVisitorName());
+					comment.setVisitorProfilePhoto(visitor.getProfilePhoto());
+					comment.setVisitorPersonalWebsite(visitor.getPersonalWebsite()); // 注入属性
+				}
+			}
+		}
 		return comments;
 	}
 	
@@ -80,6 +101,7 @@ public class BlogCommentServiceImpl extends ServiceImpl<BlogCommentMapper, BlogC
 		params.put(BlogComment::getIsCheck, 1);
 		params.put(BlogComment::getIsRead, 1);
 		params.put(BlogComment::getIsValid, 1);
+		params.put(BlogComment::getType, Constant.COMMENT_ARTILCE);
 		IPage<BlogComment> pageData = blogCommentMapper.selectPage(page, new LambdaQueryWrapper<BlogComment>()
 				.allEq(params)
 				.eq(BlogComment::getParentId, 0)
@@ -156,12 +178,14 @@ public class BlogCommentServiceImpl extends ServiceImpl<BlogCommentMapper, BlogC
 				if(parentComment.getVisitorId() == visitor.getVisitorId()) {
 					parentComment.setVisitorName(visitor.getVisitorName()); // 注入访客名称
 					parentComment.setVisitorProfilePhoto(visitor.getProfilePhoto()); // 注入访客头像
+					parentComment.setVisitorPersonalWebsite(visitor.getPersonalWebsite()); // 注入访客网站
 				}
 			}
 			for (BlogComment childComment : childComments) {
 				if(childComment.getVisitorId() == visitor.getVisitorId()) {
 					childComment.setVisitorName(visitor.getVisitorName()); // 注入访客名称
 					childComment.setVisitorProfilePhoto(visitor.getProfilePhoto()); // 注入访客头像
+					childComment.setVisitorPersonalWebsite(visitor.getPersonalWebsite()); // 注入访客网站
 				}
 			}
 		}
@@ -174,6 +198,7 @@ public class BlogCommentServiceImpl extends ServiceImpl<BlogCommentMapper, BlogC
 			for (BlogComment comment2 : allComments) {
 				if(comment1.getReplyId() == comment2.getCommentId()) {
 					comment1.setReplyVisitorName(comment2.getVisitorName()); // 注入回复评论的评论人名称
+					comment1.setReplyPersonalWebsite(comment2.getVisitorPersonalWebsite()); // 注入回复评论的评论人网站
 				}
 			}
 		}

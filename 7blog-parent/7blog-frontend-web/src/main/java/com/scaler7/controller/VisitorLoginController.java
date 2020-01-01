@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -43,6 +45,49 @@ public class VisitorLoginController {
 		return new Result(CodeMsg.ERROR);
 	}
 	
+	@GetMapping("loginOut")
+	@ResponseBody
+	public Object loginOut(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.removeAttribute(WebConstant.CURRENT_VISITOR); // 移出session中的当前访客
+		session.setAttribute(WebConstant.IS_LOGIN, false);
+		return new Result();
+	}
+	
+	@GetMapping("currVisitorinfo")
+	@ResponseBody
+	public Object getCurrVisitor(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		BlogVisitor currVisitor = (BlogVisitor) session.getAttribute(WebConstant.CURRENT_VISITOR);
+		BlogVisitor visitor = new BlogVisitor();
+		
+		visitor.setVisitorId(currVisitor.getVisitorId());
+		visitor.setEmail(currVisitor.getEmail());
+		visitor.setPersonalWebsite(currVisitor.getPersonalWebsite());
+		visitor.setQqAccount(currVisitor.getQqAccount());
+		visitor.setWechatAccount(currVisitor.getWechatAccount());
+		visitor.setAllowInform(currVisitor.getAllowInform()); // 按需给予数据，防止敏感数据被抓取
+		
+		return new Result(visitor);
+		
+	}
+	
+	@PutMapping("currVisitorinfo")
+	@ResponseBody
+	public Object updateById(@RequestBody BlogVisitor visitor,HttpServletRequest request) {
+		blogVisitorService.updateById(visitor);
+		HttpSession session = request.getSession();
+		BlogVisitor currVisitor = (BlogVisitor) session.getAttribute(WebConstant.CURRENT_VISITOR);
+		
+		currVisitor.setEmail(visitor.getEmail());
+		currVisitor.setPersonalWebsite(visitor.getPersonalWebsite());
+		currVisitor.setQqAccount(visitor.getQqAccount());
+		currVisitor.setWechatAccount(visitor.getWechatAccount());
+		currVisitor.setAllowInform(visitor.getAllowInform());
+		
+		session.setAttribute(WebConstant.CURRENT_VISITOR, currVisitor); // 更新session
+		return new Result();
+	}
 	
 	@GetMapping("qq/oauth")
 	public String qqOauth(HttpServletRequest request) {

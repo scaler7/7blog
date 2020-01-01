@@ -12,7 +12,12 @@
 <body>
 <div class="ok-body">
 	<!--form表单-->
-	<form class="layui-form layui-form-pane ok-form" id = "articleForm">
+	<form class="layui-form layui-form-pane ok-form " id = "articleForm">
+		<div class="layui-form-item">
+			<div class="layui-input-inline">
+				<img alt="" src="/images/upload.jpg" id="uploadImg" width="300" height="200">
+			</div>
+		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">标题</label>
 			<div class="layui-input-block">
@@ -56,6 +61,7 @@
 				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 			</div>
 		</div>
+		<input type="hidden" name="articleImg" id="articleImg">
 	</form>
 </div>
 <!--js逻辑-->
@@ -80,38 +86,62 @@
 	});
 	
 	
-	layui.use(["form", "okUtils", "okLayer","jquery"], function () {
-		//let $ = layui.jquery;
-		let form = layui.form;
-		let okUtils = layui.okUtils;
-		let okLayer = layui.okLayer;
-		okLoading.close();
-		form.on("submit(addArticle)", function (data) {
-			var params = JSON.stringify($('#articleForm').serializeJSON())
-			okUtils.ajax("/blog/article", "post", params , true).done(function (response) {
-				okLayer.greenTickMsg(response.msg, function () {
-					parent.layer.close(parent.layer.getFrameIndex(window.name));
-					window.location.href = "/pages/often/article.html";
-				});
-			}).fail(function (error) {
-				console.log(error)
+layui.use(["form", "okUtils", "okLayer","jquery","upload"], function () {
+	//let $ = layui.jquery;
+	let form = layui.form;
+	let okUtils = layui.okUtils;
+	let okLayer = layui.okLayer;
+	let upload = layui.upload;
+	
+	okLoading.close();
+	form.on("submit(addArticle)", function (data) {
+		var params = JSON.stringify($('#articleForm').serializeJSON())
+		okUtils.ajax("/blog/article", "post", params , true).done(function (response) {
+			okLayer.greenTickMsg(response.msg, function () {
+				parent.layer.close(parent.layer.getFrameIndex(window.name));
+				window.location.href = "/pages/often/article.html";
 			});
-			return false;
+		}).fail(function (error) {
+			console.log(error)
 		});
-		
-		//页面加载或刷新，动态渲染下拉框
-		$(document).ready(function(){ 
-			$.get("/blog/category/list",function(rs){
-				$.each(rs.data, function (index, item) {
-	    			// 追加option节点 
-	    			//item.name是option里的文本值
-	    			//item.id是option的value值
-					$("#categoryId").append(new Option(item.categoryName, item.categoryId));
-				});
-				form.render();
-			})
-		});
+		return false;
 	});
+	
+	//页面加载或刷新，动态渲染下拉框
+	$(document).ready(function(){ 
+		$.get("/blog/category/list",function(rs){
+			$.each(rs.data, function (index, item) {
+    			// 追加option节点 
+    			//item.name是option里的文本值
+    			//item.id是option的value值
+				$("#categoryId").append(new Option(item.categoryName, item.categoryId));
+			});
+			form.render();
+		})
+	});
+	
+	
+    var uploadInst = upload.render({
+	    elem: '#uploadImg' //绑定元素
+	    ,url: '/file/upload' //上传接口
+	    ,choose: function(obj){
+	    	obj.preview(function(index, file, result){
+	    		$("#uploadImg").attr('src',result); // 预览图片
+	    	});
+	    }
+	    ,done: function(rs){
+	   		if(rs.code != 200){
+	   			layer.msg("图片上传失败")
+	   			return false;
+	   		}
+	   		layer.msg("图片上传成功！");
+	   		$("#articleImg").attr('value',rs.data);
+	    }
+	    ,error: function(){
+	      //请求异常回调
+	    }
+	});
+});
 </script>
 </body>
 </html>

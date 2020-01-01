@@ -80,7 +80,7 @@ public class BlogVisitor implements Serializable {
     private Integer allowInform = 0;
 
     @ApiModelProperty(value = "是否有效")
-    private Integer isValid = 0;
+    private Integer isValid = 1;
     
     @TableField(exist = false)
     @ApiModelProperty(value = "评论数量")

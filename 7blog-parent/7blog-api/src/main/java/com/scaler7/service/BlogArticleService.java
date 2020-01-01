@@ -27,4 +27,6 @@ public interface BlogArticleService extends IService<BlogArticle> {
 
 	IPage<BlogArticle> findByPageFrontend(Page<BlogArticle> page, BlogArticle blogArticle);
 
+	void updateLikeCount(Integer articleId);
+
 }

@@ -116,8 +116,10 @@
 					<th:block th:each="post : ${articles}">
 						<div class="layui-col-md4 layui-col-sm6 layui-col-xs12">
 							<article class="card">
-								<a th:href="@{/articleDetail/info/{id} (id = ${post.articleId})}">
-									<img class="card-img-top" src="/resources/images/img04.jpg" alt=""></a>
+								<a th:href="@{/articleDetail/info/{id} (id = ${post.articleId})}" th:if="${post.articleImg != null}">
+									<img class="card-img-top" th:src="${post.articleImg}" alt=""></a>
+								<a th:href="@{/articleDetail/info/{id} (id = ${post.articleId})}" th:if="${post.articleImg == null || post.articleImg == ''}">
+									<img class="card-img-top" src="/resources/images/img02.jpg" alt=""></a>
 								<div class="card-body">
 									<div class="card-subtitle mb-2 text-muted"><span title="作者">scaler7</span> &nbsp;&nbsp;<span title="发布时间" th:utext="${post.createTime}"></span></div>
 									<h4 class="card-title"><a th:href="@{/articleDetail/info/{id} (id = ${post.articleId})}" th:utext="${@webcommons.subStr(@webcommons.removeHtml(post.title),15)}"></a></h4>
@@ -139,18 +141,18 @@
 			<div id="swiper1" class="swiper-container wow zoomIn">
 				<div class="swiper-wrapper">
 				
-					<th:block th:each="comments : ${comments}">
+					<th:block th:each="comment : ${comments}">
 						<div class="swiper-slide">
 							<div class="testimonials-gd-vj">
 								<p class="sub-test">
 									<i class="layui-icon layui-icon-dialogue"></i>
-									<span th:utext="${@webcommons.subStr(@webcommons.removeHtml(comments.content),50)}"></span>
+									<span th:utext="${comment.content}"></span>
 								</p>
 								<div class="user">
-									<a href="#" target="_blank" rel="nofollow">
+									<a th:href="${comment.visitorPersonalWebsite}" target="_blank" rel="nofollow">
 										<div>
-											<img class="layui-circle" src="/resources/images/nan.png" alt="">
-											<h5 class="layui-elip" th:utext="${comments.visitorId}"></h5>
+											<img class="layui-circle" th:src="${comment.visitorProfilePhoto}" alt="">
+											<h5 class="layui-elip" th:utext="${comment.visitorName}"></h5>
 										</div>
 									</a>
 								</div>
@@ -204,7 +206,7 @@
 									<use th:case="2" xlink:href="#layui-extend-jiangbei-3"></use>
 								</th:block>
 							</svg>
-							<a href="#" target="_blank" rel="nofollow">
+							<a th:href="${top3Visitor.personalWebsite}" target="_blank" rel="nofollow">
 								<img class="layui-circle" th:src="${top3Visitor.profilePhoto}" alt="">
 								<h4 class="layui-elip" th:utext="${top3Visitor.visitorName}"></h4>
 							</a>
@@ -262,7 +264,7 @@
 					
 					<th:block th:each="recentVisitor : ${recentVisitors}">
 						<div class="swiper-slide">
-							<a href="#" target="_blank" rel="nofollow">
+							<a th:href="${recentVisitor.personalWebsite}" target="_blank" rel="nofollow">
 								<th:block th:if="${recentVisitor.profilePhoto} == null">
 									<img class="layui-circle" src="/resources/images/nan.png" alt="">
 								</th:block>

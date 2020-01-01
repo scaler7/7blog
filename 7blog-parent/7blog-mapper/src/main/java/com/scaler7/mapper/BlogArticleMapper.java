@@ -3,6 +3,7 @@ package com.scaler7.mapper;
 import com.scaler7.entity.BlogArticle;
 import com.scaler7.vo.BlogArticleVO;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -21,6 +22,10 @@ public interface BlogArticleMapper extends BaseMapper<BlogArticle> {
 	
 	public List<BlogArticleVO> selectCountGroupByCategory();
 	
-	public void increCommentCount(@Param("articleId")Integer articleId);
+	public void increCommentCount(@Param("articleId")Serializable articleId);
+	
+	public void increPageView(@Param("articleId")Serializable articleId);
+	
+	public void increLikeCount(@Param("articleId")Serializable articleId);
 	
 }

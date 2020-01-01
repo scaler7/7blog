@@ -38,3 +38,7 @@ swagger2:
   description: 提供后台管理系统的所有CRUD操作接口
   terms-of-service-url: scaler7
   license: GPL3.0
+#dfs
+fdfs:
+  tracker-list:
+  - scaler7.online:22122

@@ -43,6 +43,9 @@ public class BlogComment implements Serializable {
 
     @ApiModelProperty(value = "文章id")
     private Integer articleId;
+    
+    @ApiModelProperty(value = "文章id")
+    private Integer chatId;
 
     @ApiModelProperty(value = "父评论id")
     private Integer parentId;
@@ -60,6 +63,9 @@ public class BlogComment implements Serializable {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:SS",timezone = "GMT+8")
     private LocalDateTime createdTime;
+    
+    @ApiModelProperty(value = "1文章评论2说说评论3网站留言")
+    private Integer type;
 
     @ApiModelProperty(value = "审核通过1通过0未通过")
     private Integer isCheck;
@@ -78,9 +84,17 @@ public class BlogComment implements Serializable {
     @TableField(exist = false)
     private String replyVisitorName;
     
+    @ApiModelProperty(value = "回复评论的评论人网站")
+    @TableField(exist = false)
+    private String replyPersonalWebsite;
+    
     @ApiModelProperty(value = "评论人头像")
     @TableField(exist = false)
     private String visitorProfilePhoto;
+    
+    @ApiModelProperty(value = "评论人网站")
+    @TableField(exist = false)
+    private String visitorPersonalWebsite;
     
     @ApiModelProperty(value = "子评论集合")
     @TableField(exist = false)
