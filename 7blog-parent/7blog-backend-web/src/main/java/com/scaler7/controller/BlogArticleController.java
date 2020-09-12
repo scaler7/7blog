@@ -18,6 +18,8 @@ import com.scaler7.service.BlogArticleService;
 import com.scaler7.vo.BlogArticleVO;
 import io.swagger.annotations.ApiOperation;
 
+import java.util.List;
+
 /**
  * <p>
  *  前端控制器
@@ -63,6 +65,13 @@ public class BlogArticleController {
 	public Object delete(@PathVariable("articleId") Integer articleId) {
 		blogArticleService.removeById(articleId);
 		return new Result();
+	}
+
+	@GetMapping("list")
+	@ApiOperation("所有文章列表")
+	public Object list(){
+		List<BlogArticle> list = blogArticleService.list();
+		return new Result(list);
 	}
 	
 }

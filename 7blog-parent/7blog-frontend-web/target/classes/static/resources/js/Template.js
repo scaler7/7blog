@@ -63,7 +63,7 @@ function setStyle(flag) {
 			  + '<div class="layui-form-item">'
 			  + '<label class="layui-form-label">邮箱</label>'
 			  + '<div class="layui-input-inline">'
-			  + '<input type="text" name="email" autocomplete="off" class="layui-input" lay-verify="required|email" placeholder="请输入邮箱">'
+			  + '<input type="text" name="email" autocomplete="off" class="layui-input" lay-verify="email" placeholder="请输入邮箱">'
 			  + '</div>'
 			  + '<div class="layui-form-mid layui-word-aux">仅用于留言回复通知</div>'
 			  + '</div>'

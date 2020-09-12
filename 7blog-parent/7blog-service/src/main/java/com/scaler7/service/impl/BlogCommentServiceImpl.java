@@ -1,5 +1,8 @@
 package com.scaler7.service.impl;
 
+import cn.hutool.core.util.NumberUtil;
+import com.baomidou.mybatisplus.core.injector.methods.UpdateById;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.scaler7.common.Constant;
 import com.scaler7.entity.BlogComment;
 import com.scaler7.entity.BlogVisitor;
@@ -10,12 +13,14 @@ import com.scaler7.service.BlogCommentService;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
+import com.scaler7.vo.BlogCommentVO;
 import lombok.extern.slf4j.Slf4j;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,6 +32,9 @@ import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.NumberUtils;
+import org.springframework.util.StringUtils;
 
 /**
  * <p>
@@ -53,6 +61,7 @@ public class BlogCommentServiceImpl extends ServiceImpl<BlogCommentMapper, BlogC
 		Assert.notNull(limit, "查询条数不能为空！");
 		log.info("查询文章列表,查询条数为{}",limit);
 		List<BlogComment> comments = blogCommentMapper.selectList(new LambdaQueryWrapper<BlogComment>()
+				.eq(BlogComment::getIsValid,1) // 只查询有效的评论
 				.orderByDesc(BlogComment::getCreatedTime)
 				.last(limit != null, "limit "+limit)
 				);
@@ -204,4 +213,49 @@ public class BlogCommentServiceImpl extends ServiceImpl<BlogCommentMapper, BlogC
 		}
 	}
 
+	@Override
+	public IPage<BlogComment> findByPageBackend(Page<BlogComment> pages, BlogCommentVO blogCommentVO) {
+		log.info("分页查询评论{},{}",pages.getCurrent(),pages.getSize());
+
+		/*blogVisitorMapper.selectList(new LambdaQueryWrapper<>()
+		.like(StringUtils.hasText(blogCommentVO.getVisitorName()),BlogVisitor::getVisitorName,blogCommentVO.getVisitorName())
+		);*/
+
+		IPage<BlogComment> pageData = blogCommentMapper.selectPage(pages, new LambdaQueryWrapper<BlogComment>()
+				.eq(blogCommentVO.getArticleId() != null,BlogComment::getArticleId,blogCommentVO.getArticleId())
+				.le(blogCommentVO.getStartTime() != null, BlogComment::getCreatedTime, blogCommentVO.getEndTime())
+				.ge(blogCommentVO.getEndTime() != null, BlogComment::getCreatedTime, blogCommentVO.getStartTime())
+		);
+
+		List<BlogComment> blogComments = pageData.getRecords();
+		ArrayList<Integer> visitorIds = new ArrayList<>();
+
+		List<BlogVisitor> blogVisitors = blogVisitorMapper.selectList(new LambdaQueryWrapper<BlogVisitor>()
+				.in(!CollectionUtils.isEmpty(visitorIds), BlogVisitor::getVisitorId, visitorIds)
+		);
+
+		for (BlogComment blogComment : blogComments) {
+			for (BlogVisitor blogVisitor : blogVisitors) {
+				if(blogComment.getVisitorId() == blogVisitor.getVisitorId())
+					blogComment.setVisitorName(blogVisitor.getVisitorName());
+			}
+		}
+
+		return pageData;
+	}
+
+	@Override
+	public boolean updateById(BlogComment blogComment) {
+		Assert.notNull(blogComment,"要修改的数据不能为null！");
+		Assert.notNull(blogComment.getCommentId(),"commentId不能为null");
+		log.info("修改id为{}的comment数据",blogComment.getCommentId());
+		return super.updateById(blogComment);
+	}
+
+	@Override
+	public boolean removeById(Serializable commentId) {
+		Assert.notNull(commentId,"要删除的commentId不能为null！");
+		log.info("删除id为{}的评论",commentId);
+		return super.removeById(commentId);
+	}
 }

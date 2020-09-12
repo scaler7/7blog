@@ -1,9 +1,11 @@
 package com.scaler7.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.scaler7.entity.BlogComment;
 import java.util.List;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.scaler7.vo.BlogCommentVO;
 
 /**
  * <p>
@@ -19,6 +21,5 @@ public interface BlogCommentService extends IService<BlogComment> {
 
 	IPage<BlogComment> findByPageAndArticleId(IPage<BlogComment> page, Integer articleId);
 
-
-
+	IPage<BlogComment> findByPageBackend(Page<BlogComment> pages, BlogCommentVO blogCommentVO);
 }

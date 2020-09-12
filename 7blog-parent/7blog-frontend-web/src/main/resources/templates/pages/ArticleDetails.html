@@ -170,12 +170,12 @@
 
 <script src="/resources/js/Template.js"></script>
 <script type="text/javascript" th:inline="javascript">
-var isLogin = [[${session.isLogin}]];
-var profilePhoto = [[${session.profilePhoto}]]
-var nickname = [[${session.nickname}]]
-var articleId = [[${article.articleId}]];
-getParams(articleId);
-initParams(isLogin,profilePhoto,nickname); // 写在这里是为了解决外联js无法使用thymeleaf取值的问题
+	var isLogin = [[${session.isLogin}]];
+	var profilePhoto = [[${session.profilePhoto}]]
+	var nickname = [[${session.nickname}]]
+	var articleId = [[${article.articleId}]];
+	getParams(articleId);
+	initParams(isLogin,profilePhoto,nickname); // 写在这里是为了解决外联js无法使用thymeleaf取值的问题
 </script>
 </body>
 <!-- InstanceEnd --></html>

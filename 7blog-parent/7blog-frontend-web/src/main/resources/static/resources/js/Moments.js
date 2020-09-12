@@ -1,5 +1,41 @@
 // JavaScript Document
+var momentId;
+function spread(id){ // momentId是用来唯一标识评论区的html代码块，1个说说对应的评论区代码块只有1个
+	//name = $("#spread").className; jquery的id选择器此处不生效，原因未知
+	momentId = id;
+	name = document.getElementById("comment"+momentId).className;
+	if(name == "review-version layui-hide"){
+		document.getElementById("comment"+momentId).className = "review-version";
+	}
 
+	if(name == "review-version"){
+		document.getElementById("comment"+momentId).className = "review-version layui-hide";
+	}
+}
+
+layui.use(['layer','layedit','laypage','form'],function () {
+	console.log("layui init!")
+	var layer = layui.layer;
+	var layedit = layui.layedit;
+	var form = layui.form;
+	var idArr = [0];
+	var editIndexMap = new Map();
+
+	renderEdit(idArr);
+
+	function renderEdit(idArr){
+		for(var i=0;i<idArr.length;i++){
+			console.log(idArr.length);
+			var index = layedit.build('demo-'+0,{
+				height: 150,
+				tool: ['face', '|', 'link'],
+			});
+			editIndexMap[idArr[i].toString()] = index;
+		}
+	}
+})
+
+/*
 function iniParam() {
     var form = layui.form,laypage = layui.laypage,layedit = layui.layedit;
 	
@@ -71,3 +107,4 @@ function iniParam() {
 
 
 
+*/

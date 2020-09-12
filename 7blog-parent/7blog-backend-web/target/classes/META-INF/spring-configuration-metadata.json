@@ -25,32 +25,38 @@
     {
       "name": "shiro.hash-algorithm-name",
       "type": "java.lang.String",
-      "sourceType": "com.scaler7.config.ShiroConfig"
+      "sourceType": "com.scaler7.config.ShiroConfig",
+      "defaultValue": "md5"
     },
     {
       "name": "shiro.hash-iterations",
       "type": "java.lang.Integer",
-      "sourceType": "com.scaler7.config.ShiroConfig"
+      "sourceType": "com.scaler7.config.ShiroConfig",
+      "defaultValue": 2
     },
     {
       "name": "shiro.login-url",
       "type": "java.lang.String",
-      "sourceType": "com.scaler7.config.ShiroConfig"
+      "sourceType": "com.scaler7.config.ShiroConfig",
+      "defaultValue": "\/login.html"
     },
     {
       "name": "shiro.target-bean-name",
       "type": "java.lang.String",
-      "sourceType": "com.scaler7.config.ShiroConfig"
+      "sourceType": "com.scaler7.config.ShiroConfig",
+      "defaultValue": "shiroFilter"
     },
     {
       "name": "shiro.target-filter-lifecycle",
       "type": "java.lang.Boolean",
-      "sourceType": "com.scaler7.config.ShiroConfig"
+      "sourceType": "com.scaler7.config.ShiroConfig",
+      "defaultValue": true
     },
     {
       "name": "shiro.unauthorized-url",
       "type": "java.lang.String",
-      "sourceType": "com.scaler7.config.ShiroConfig"
+      "sourceType": "com.scaler7.config.ShiroConfig",
+      "defaultValue": "\/unauthorized.html"
     },
     {
       "name": "swagger2.base-package",

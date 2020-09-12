@@ -17,6 +17,11 @@ public class PageController {
 	public Object about() {
 		return "/pages/About";
 	}
+
+	@GetMapping("moments")
+	public Object moments() {
+		return "/pages/Moments";
+	}
 	
 	@GetMapping("wait")
 	public Object wait1() {

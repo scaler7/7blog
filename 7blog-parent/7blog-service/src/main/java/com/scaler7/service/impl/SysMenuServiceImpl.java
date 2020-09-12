@@ -84,7 +84,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 		}
 		for (Menu nav : menus) {
 			if(nav.getParentId() == 0) {
-				treeMenus.add(nav); // 获取根节点
+				treeMenus.add(nav); // parentId为0的是根节点
 			}
 		}
 		for (Menu nav : treeMenus) {
