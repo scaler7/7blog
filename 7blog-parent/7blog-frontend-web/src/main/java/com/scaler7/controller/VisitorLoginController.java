@@ -186,6 +186,7 @@ public class VisitorLoginController {
 		BlogVisitor visitor = new BlogVisitor();
 		visitor.setAge(age);
 		visitor.setGender(gender);
+		visitor.setPersonalWebsite("#");
 		visitor.setProfilePhoto(profilePhoto);
 		visitor.setNickname(nickname);
 		visitor.setVisitorName(nickname);

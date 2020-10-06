@@ -33,7 +33,7 @@ public class BlogCommentController {
             BlogCommentVO blogCommentVO
     ){
         Page<BlogComment> pages = new Page<>(page, limit);
-        IPage<BlogComment> pageData = blogCommentService.findByPageBackend(pages,blogCommentVO);
+        IPage<BlogComment> pageData = blogCommentService.findCommentByPageBackend(pages,blogCommentVO);
         return new Result(pageData);
     }
 

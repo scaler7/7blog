@@ -21,5 +21,5 @@ public interface BlogCommentService extends IService<BlogComment> {
 
 	IPage<BlogComment> findByPageAndArticleId(IPage<BlogComment> page, Integer articleId);
 
-	IPage<BlogComment> findByPageBackend(Page<BlogComment> pages, BlogCommentVO blogCommentVO);
+	IPage<BlogComment> findCommentByPageBackend(Page<BlogComment> pages, BlogCommentVO blogCommentVO);
 }

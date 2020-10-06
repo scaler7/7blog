@@ -17,7 +17,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface BlogArticleService extends IService<BlogArticle> {
 
-	IPage<BlogArticle> findByPageBackend(Page<BlogArticle> page, BlogArticleVO blogArticle);
+	IPage<BlogArticle> findArticleByPageBackend(Page<BlogArticle> page, BlogArticleVO blogArticle);
 	
 	List<BlogArticle> findArticleList(Integer limit);
 

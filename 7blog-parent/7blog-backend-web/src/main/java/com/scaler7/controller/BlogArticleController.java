@@ -42,7 +42,7 @@ public class BlogArticleController {
 			@RequestParam(defaultValue = "10") Integer limit,
 			BlogArticleVO blogArticleVO) {
 		Page<BlogArticle> pages = new Page<BlogArticle>(page, limit);
-		IPage<BlogArticle> pageData = blogArticleService.findByPageBackend(pages,blogArticleVO);
+		IPage<BlogArticle> pageData = blogArticleService.findArticleByPageBackend(pages,blogArticleVO);
 		return new Result(pageData);
 	}
 	

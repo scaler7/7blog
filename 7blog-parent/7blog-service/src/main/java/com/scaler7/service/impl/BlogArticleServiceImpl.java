@@ -44,7 +44,7 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleMapper, BlogA
 	SysUserMapper sysUserMapper;
 
 	@Override
-	public IPage<BlogArticle> findByPageBackend(Page<BlogArticle> page, BlogArticleVO blogArticleVO) {
+	public IPage<BlogArticle> findArticleByPageBackend(Page<BlogArticle> page, BlogArticleVO blogArticleVO) {
 		log.info("后端管理分页查询文章{},{}", page.getCurrent(), page.getSize());
 		IPage<BlogArticle> pageData = blogArticleMapper.selectPage(page, new LambdaQueryWrapper<BlogArticle>()
 				.like(StringUtils.hasText(blogArticleVO.getTitle()), BlogArticle::getTitle, blogArticleVO.getTitle())

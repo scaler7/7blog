@@ -47,10 +47,13 @@ public class UserLoginController {
 			System.out.println(currentUser);
 			session.setAttribute(WebConstant.CURRENT_USER, currentUser);
 		} catch (AccountException e) { // 账号错误
+			e.printStackTrace();
 			return new Result(CodeMsg.LOGIN_ERROR);
 		} catch (CredentialsException e) { // 密码错误
+			e.printStackTrace();
 			return new Result(CodeMsg.LOGIN_ERROR);
 		} catch (AuthenticationException e) { // 其他错误
+			e.printStackTrace();
 			return new Result(CodeMsg.ERROR);
 		}
 		return new Result();

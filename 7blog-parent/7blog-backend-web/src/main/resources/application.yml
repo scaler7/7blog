@@ -4,11 +4,15 @@ spring:
     url: jdbc:mysql://localhost:3306/blog2?serverTimezone=GMT%2B8
     username: root
     password: root
-    
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
 #mybatis-plus的配置
 mybatis-plus:
   mapper-locations:
-  - classpath:/mapping/*.xml
+  - classpath:/mapping/*
   type-aliases-package: com.scaler7.entity
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
@@ -41,4 +45,5 @@ swagger2:
 #dfs
 fdfs:
   tracker-list:
-  - scaler7.online:22122
+  - 114.55.27.97:22122
+  connect-timeout: 6000

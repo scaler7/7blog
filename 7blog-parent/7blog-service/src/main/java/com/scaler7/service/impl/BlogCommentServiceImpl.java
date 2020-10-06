@@ -214,7 +214,7 @@ public class BlogCommentServiceImpl extends ServiceImpl<BlogCommentMapper, BlogC
 	}
 
 	@Override
-	public IPage<BlogComment> findByPageBackend(Page<BlogComment> pages, BlogCommentVO blogCommentVO) {
+	public IPage<BlogComment> findCommentByPageBackend(Page<BlogComment> pages, BlogCommentVO blogCommentVO) {
 		log.info("分页查询评论{},{}",pages.getCurrent(),pages.getSize());
 
 		/*blogVisitorMapper.selectList(new LambdaQueryWrapper<>()

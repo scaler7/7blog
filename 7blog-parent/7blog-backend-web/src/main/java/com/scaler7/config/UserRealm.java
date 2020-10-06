@@ -14,12 +14,13 @@ import org.springframework.context.annotation.Configuration;
 
 import com.scaler7.entity.SysUser;
 import com.scaler7.service.SysUserService;
+import org.springframework.context.annotation.DependsOn;
 
 @Configuration
 public class UserRealm extends AuthorizingRealm {
-	
+
 	@Autowired
-	private SysUserService userService;
+	private SysUserService loginService;
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -31,7 +32,7 @@ public class UserRealm extends AuthorizingRealm {
 		UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
 		// 使用用户名查询用户
 		String username = usernamePasswordToken.getUsername();
-		SysUser user = userService.findUserByName(username);
+		SysUser user = loginService.findUserByName(username);
 		if(null == user) {
 			return null; // shiro会自动处理账号不存在的异常
 		}
@@ -39,5 +40,4 @@ public class UserRealm extends AuthorizingRealm {
 		return new SimpleAuthenticationInfo(user,user.getPassword(),credentialsSalt,username);
 	}
 
-	
 }
